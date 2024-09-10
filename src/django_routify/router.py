@@ -54,9 +54,9 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
-        def register(view: Callable):
+        def wrapper(view: Callable):
             nonlocal url_path, name
-            def inner(*args, **kwargs):
+            def register(*args, **kwargs):
                 nonlocal url_path, name, view
 
                 if self.__auto_naming and not name:
@@ -76,5 +76,5 @@ class Router(RouterAbstraction):
                 )
 
                 return view(*args, **kwargs)
-            return inner
-        return register
+            return register
+        return wrapper
