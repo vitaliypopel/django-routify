@@ -1,5 +1,4 @@
 from django.urls import path
-from django.http import HttpResponse
 
 from abc import ABC, abstractmethod
 
@@ -10,14 +9,17 @@ class RouterAbstraction(ABC):
         Do not use it in your project!
 
         Attributes:
-            __app_name: str | None                := Application name same as app_name in urls.py
-            __urls: list[path]                    := Urls list that can be included in urlpatterns
-            __auto_naming: bool = True            := Auto naming for every view
-            __auto_trailing_slash: bool = False   := Auto trailing slash for every view path
+            __app_name: str | None              := Application name same as app_name in urls.py
+            __prefix: str                       := Prefix for each url paths
+            __urls: list[path]                  := Urls list that can be included in urlpatterns
+            __auto_naming: bool = True          := Auto naming for every view
+            __auto_trailing_slash: bool = False := Auto trailing slash for every view path
     '''
 
     __app_name: str | None
     'Application name same as app_name in urls.py'
+    __prefix: str
+    'Prefix for each url paths | By default equals ""'
     __urls: list[path]
     'Urls list that can be included in urlpatterns'
 
@@ -29,15 +31,27 @@ class RouterAbstraction(ABC):
     @abstractmethod
     def __init__(
             self,
+            prefix: str,
             app_name: str = None,
             auto_naming: bool = True,
             auto_trailing_slash: bool = False,
     ) -> None:
         '''
             Initial method for Router.
+            :param: prefix: str
             :param app_name: str | None
             :param auto_naming: bool
             :param auto_trailing_slash: bool
+        '''
+        ...
+
+    @abstractmethod
+    @property
+    def prefix(self) -> str:
+        '''
+            prefix getter\n
+            Prefix for each url paths
+            :return: str
         '''
         ...
 
