@@ -25,7 +25,9 @@ class Router(RouterAbstraction):
             auto_naming: bool = True,
             auto_trailing_slash: bool = False,
     ) -> None:
-        self.__prefix = prefix or ''
+        self.__prefix = prefix.rstrip('/').lstrip('/') or ''
+        if self.__prefix != '':
+            self.__prefix += '/'
         self.__app_name = app_name or ''
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
