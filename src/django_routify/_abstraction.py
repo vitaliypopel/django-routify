@@ -10,20 +10,20 @@ class RouterAbstraction(ABC):
         Do not use it in your project!
 
         Attributes:
-            app_name: str | None                := Application name same as app_name in urls.py
-            urls: list[path]                    := Urls list that can be included in urlpatterns
-            auto_naming: bool = True            := Auto naming for every view
-            auto_trailing_slash: bool = False   := Auto trailing slash for every view path
+            __app_name: str | None                := Application name same as app_name in urls.py
+            __urls: list[path]                    := Urls list that can be included in urlpatterns
+            __auto_naming: bool = True            := Auto naming for every view
+            __auto_trailing_slash: bool = False   := Auto trailing slash for every view path
     '''
 
-    app_name: str | None
+    __app_name: str | None
     'Application name same as app_name in urls.py'
-    urls: list[path]
+    __urls: list[path]
     'Urls list that can be included in urlpatterns'
 
-    auto_naming: bool
+    __auto_naming: bool
     'Auto naming for every view | By default equals True'
-    auto_trailing_slash: bool
+    __auto_trailing_slash: bool
     'Auto trailing slash for every view path | By default equals False'
 
     @abstractmethod
@@ -35,11 +35,49 @@ class RouterAbstraction(ABC):
     ) -> None:
         '''
             Initial method for Router.
-            Do not use it in your project!
-            This is just abstraction class for Router, without implementation.
             :param app_name: str | None
             :param auto_naming: bool
             :param auto_trailing_slash: bool
+        '''
+        ...
+
+    @abstractmethod
+    @property
+    def app_name(self) -> str:
+        '''
+            app_name getter\n
+            Application name same as app_name in urls.py
+            :return: str
+        '''
+        ...
+
+    @abstractmethod
+    @property
+    def auto_naming(self) -> bool:
+        '''
+            auto_naming getter\n
+            Auto naming for every view
+            :return: bool
+        '''
+        ...
+
+    @abstractmethod
+    @property
+    def auto_trailing_slash(self) -> bool:
+        '''
+            auto_trailing_slash getter\n
+            Auto trailing slash for every view path
+            :return: bool
+        '''
+        ...
+
+    @abstractmethod
+    @property
+    def urls(self) -> list[path]:
+        '''
+            urls getter\n
+            Urls list that can be included in urlpatterns
+            :return: list[path]
         '''
         ...
 
