@@ -82,11 +82,11 @@ class RouterAbstraction(ABC):
         ...
 
     @abstractmethod
-    def route(self, url_path: str, name: str = None) -> HttpResponse:
+    def route(self, url_path: str, name: str = None):
         '''
             Router method that register view in urlpatterns with django.urls.path
             :param url_path: str
             :param name: str | None
-            :return: HttpResponse
+            :return: Any
         '''
         ...
