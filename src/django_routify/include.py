@@ -10,4 +10,10 @@ def include_router(router: Router) -> path:
         :param router: Router
         :return: django.urls.path
     '''
-    return path(router.prefix, include(router.urls, namespace=router.app_name))
+    return path(
+        router.prefix,
+        include((
+            router.urls,
+            router.app_name,
+        ))
+    )
