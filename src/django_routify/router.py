@@ -1,6 +1,7 @@
 from typing import Callable
-from inspect import isclass, isfunction
+from inspect import isclass
 
+from django.http import HttpRequest, HttpResponse
 from django.urls import path
 from django.views import View
 
@@ -55,7 +56,9 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
-        def register(view: Callable | View):
+        def register(
+                view: Callable[[HttpRequest, ...], HttpResponse] | View
+        ):
             nonlocal url_path, name
 
             if self.__auto_naming and not name:
