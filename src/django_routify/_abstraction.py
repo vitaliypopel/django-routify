@@ -45,8 +45,8 @@ class RouterAbstraction(ABC):
         '''
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def prefix(self) -> str:
         '''
             prefix getter\n
@@ -55,8 +55,8 @@ class RouterAbstraction(ABC):
         '''
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def app_name(self) -> str:
         '''
             app_name getter\n
@@ -65,8 +65,8 @@ class RouterAbstraction(ABC):
         '''
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def auto_naming(self) -> bool:
         '''
             auto_naming getter\n
@@ -75,8 +75,8 @@ class RouterAbstraction(ABC):
         '''
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def auto_trailing_slash(self) -> bool:
         '''
             auto_trailing_slash getter\n
@@ -85,8 +85,8 @@ class RouterAbstraction(ABC):
         '''
         ...
 
-    @abstractmethod
     @property
+    @abstractmethod
     def urls(self) -> list[path]:
         '''
             urls getter\n
