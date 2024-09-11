@@ -1,4 +1,5 @@
 from typing import Callable
+from inspect import isclass, isfunction
 
 from django.urls import path
 from django.views import View
@@ -54,27 +55,27 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
-        def wrapper(view: Callable):
+        def register(view: Callable | View):
             nonlocal url_path, name
-            def register(*args, **kwargs):
-                nonlocal url_path, name, view
 
-                if self.__auto_naming and not name:
-                    name = view.__name__.lower().rstrip('View')
+            if self.__auto_naming and not name:
+                name = view.__name__.lower()
+                if name[-4:] == 'view':
+                    name = name[:-4]
 
-                if self.__auto_trailing_slash:
-                    url_path = url_path.lstrip('/').rstrip('/') + '/'
+            if self.__auto_trailing_slash:
+                url_path = url_path.lstrip('/').rstrip('/') + '/'
 
-                if url_path == '/':
-                    url_path = ''
+            if url_path == '/':
+                url_path = ''
 
-                if isinstance(view, View):
-                    view = view.as_view()
-
-                self.__urls.append(
-                    path(url_path, view, name=name),
+            self.__urls.append(
+                path(
+                    url_path,
+                    view.as_view() if isclass(view) else view,
+                    name=name,
                 )
+            )
 
-                return view(*args, **kwargs)
-            return register
-        return wrapper
+            return view.as_view() if isclass(view) else view
+        return register
