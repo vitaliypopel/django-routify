@@ -3,12 +3,12 @@ from django.urls import path, include
 from .router import Router
 
 
-def include_router(router: Router) -> path:
+def include_router(router: Router) -> list[path]:
     '''
         Include router is a function that making include registered urls.
-        Returning path object which can be inserted into urlpatterns.
+        Returning list of path which can be inserted into urlpatterns.
         :param router: Router
-        :return: django.urls.path
+        :return: list[django.urls.path]
     '''
     return path(
         router.prefix,
