@@ -1,5 +1,6 @@
-from typing import Callable
 from inspect import isclass
+from typing import Callable
+import re
 
 from django.http import HttpRequest, HttpResponse
 from django.urls import path
@@ -58,13 +59,24 @@ class Router(RouterAbstraction):
     def route(self, url_path: str, name: str = None):
         def register(
                 view: Callable[[HttpRequest, ...], HttpResponse] | View
-        ):
+        ) -> Callable[[HttpRequest, ...], HttpResponse]:
             nonlocal url_path, name
 
             if self.__auto_naming and not name:
-                name = view.__name__.lower()
-                if name[-4:] == 'view':
+                name = view.__name__
+
+                if name[-4:].lower() == 'view':
                     name = name[:-4]
+
+                if isclass(view):
+                    name = '_'.join(
+                        re.findall(
+                            pattern='[A-Z][^A-Z]*',
+                            string=name,
+                        )
+                    )
+
+                name = name.lower()
 
             if self.__auto_trailing_slash:
                 url_path = url_path.lstrip('/').rstrip('/') + '/'
@@ -72,13 +84,17 @@ class Router(RouterAbstraction):
             if url_path == '/':
                 url_path = ''
 
+            if isclass(view):
+                view: View
+                view = view.as_view()
+
             self.__urls.append(
                 path(
                     url_path,
-                    view.as_view() if isclass(view) else view,
+                    view,
                     name=name,
                 )
             )
 
-            return view.as_view() if isclass(view) else view
+            return view
         return register
