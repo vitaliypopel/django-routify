@@ -57,9 +57,9 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
-        VIEW_TYPE: Type = Callable[[HttpRequest, ...], HttpResponse]
+        FUNC_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
 
-        def register(view: VIEW_TYPE | View) -> VIEW_TYPE:
+        def register(view: VIEW_TYPE | View) -> FUNC_VIEW | View:
             nonlocal url_path, name
 
             if self.__auto_naming and not name:
@@ -84,14 +84,10 @@ class Router(RouterAbstraction):
             if url_path == '/':
                 url_path = ''
 
-            if isclass(view):
-                view: View
-                view = view.as_view()
-
             self.__urls.append(
                 path(
                     url_path,
-                    view,
+                    view.as_view() if isclass(view) else view,
                     name=name,
                 )
             )
