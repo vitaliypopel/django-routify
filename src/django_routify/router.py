@@ -1,12 +1,10 @@
 from inspect import isclass
-from typing import Callable, Type
 import re
 
-from django.http import HttpRequest, HttpResponse
 from django.urls import path
 from django.views import View
 
-from ._abstraction import RouterAbstraction
+from ._abstraction import RouterAbstraction, FUNC_VIEW
 
 
 class Router(RouterAbstraction):
@@ -28,12 +26,16 @@ class Router(RouterAbstraction):
             auto_naming: bool = True,
             auto_trailing_slash: bool = False,
     ) -> None:
-        self.__prefix = prefix.rstrip('/').lstrip('/') or ''
-        if self.__prefix != '':
-            self.__prefix += '/'
+        prefix = prefix or ''
+
+        self.__prefix = prefix.rstrip('/').lstrip('/') + '/'
+        if self.__prefix == '/':
+            self.__prefix = ''
+
         self.__app_name = app_name or ''
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
+
         self.__urls = []
 
     @property
@@ -57,8 +59,6 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
-        FUNC_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
-
         def register(view: FUNC_VIEW | View) -> FUNC_VIEW | View:
             nonlocal url_path, name
 
