@@ -1,9 +1,9 @@
 # Django-Routify
 **Django-Routify** is a package for simple routing Views in the classic Django framework.
 
-With Django-Routify package you don't have anymore manually register your views in urlpatterns using django.urls.path function.
+With Django-Routify package you no longer have to manually register your views in `urlpatterns` using django.urls.path function.
 
-Django-Routify can help you to easy register your views using Router class and his @Router.route(...) decorator.
+Django-Routify can help you to easily register your views using Router class and his @Router.route(...) decorator.
 If you are familiar with Flask, FastAPI or even Django REST Framework, you know that every single view should be registered using decorators.
 It is <ins>easy to read</ins> first of all, and <ins>simplified work</ins>.
 
@@ -68,10 +68,10 @@ urlpatterns = [
 ```
 
 #### Note:
-_The result of these two examples will do the same things_
+_The result of these two examples will do the same thing_
 
-## Instalation
-To install Django-Routify package use command below in your environment:
+## Installation
+To install Django-Routify package use the command below in your environment:
 
 - For Linux/Mac:
 ```shell
