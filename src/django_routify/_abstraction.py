@@ -1,6 +1,10 @@
+from django.http import HttpRequest, HttpResponse
 from django.urls import path
 
 from abc import ABC, abstractmethod
+from typing import Callable, Type
+
+FUNC_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
 
 
 class RouterAbstraction(ABC):
@@ -31,7 +35,7 @@ class RouterAbstraction(ABC):
     @abstractmethod
     def __init__(
             self,
-            prefix: str,
+            prefix: str = None,
             app_name: str = None,
             auto_naming: bool = True,
             auto_trailing_slash: bool = False,
@@ -43,7 +47,10 @@ class RouterAbstraction(ABC):
             :param auto_naming: bool
             :param auto_trailing_slash: bool
         '''
-        ...
+        raise NotImplementedError(
+            'Use Router from django_routify, '
+            'but not RouterAbstraction'
+        )
 
     @property
     @abstractmethod
