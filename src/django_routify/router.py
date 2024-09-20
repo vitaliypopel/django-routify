@@ -94,3 +94,13 @@ class Router(RouterAbstraction):
 
             return view
         return register
+
+    def __str__(self) -> str:
+        return f'Router(\n' \
+               f'\tapp_name:\t"{self.__app_name}"\n' \
+               f'\turl_prefix:\t"{self.__prefix}"\n' \
+               f'\turls:\t\t{self.__urls}\n' \
+               f')'
+
+    def __repr__(self) -> str:
+        return str(self)
