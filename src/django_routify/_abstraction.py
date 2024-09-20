@@ -111,3 +111,19 @@ class RouterAbstraction(ABC):
             :return: Any
         '''
         ...
+
+    @abstractmethod
+    def __str__(self) -> str:
+        '''
+            Router string representation
+            :return: str
+        '''
+        ...
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        '''
+            Router string representation
+            :return: str
+        '''
+        ...
