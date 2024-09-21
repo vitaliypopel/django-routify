@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, reverse
 from django.views.generic import TemplateView, RedirectView, FormView, View
 
@@ -20,11 +20,13 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 @router.route('async/', name='async')
-async def async_view(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('''
-        <h2><ins>Async</ins> page</h2>
-        <p>This is <b>async</b> view</p>
-    ''')
+async def async_view(request: HttpRequest) -> JsonResponse:
+    return JsonResponse(
+        {
+            'title': '__Async__ page',
+            'content': 'This is **async** view',
+        }
+    )
 
 
 @router.route('template/')
