@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.urls import path
+from django.urls import URLPattern
 
 from abc import ABC, abstractmethod
 from typing import Callable, Type
@@ -15,7 +15,7 @@ class RouterAbstraction(ABC):
         Attributes:
             __app_name: str | None              := Application name same as app_name in urls.py
             __prefix: str                       := Prefix for each url paths
-            __urls: list[path]                  := Urls list that can be included in urlpatterns
+            __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
             __auto_naming: bool = True          := Auto naming for every view
             __auto_trailing_slash: bool = False := Auto trailing slash for every view path
     '''
@@ -24,8 +24,8 @@ class RouterAbstraction(ABC):
     'Application name same as app_name in urls.py'
     __prefix: str
     'Prefix for each url paths | By default equals ""'
-    __urls: list[path]
-    'Urls list that can be included in urlpatterns'
+    __urls: list[URLPattern]
+    'List of URLPatterns that can be included in urlpatterns'
 
     __auto_naming: bool
     'Auto naming for every view | By default equals True'
@@ -94,11 +94,11 @@ class RouterAbstraction(ABC):
 
     @property
     @abstractmethod
-    def urls(self) -> list[path]:
+    def urls(self) -> list[URLPattern]:
         '''
             urls getter\n
-            Urls list that can be included in urlpatterns
-            :return: list[path]
+            List of URLPatterns that can be included in urlpatterns
+            :return: list[django.urls.URLPattern]
         '''
         ...
 

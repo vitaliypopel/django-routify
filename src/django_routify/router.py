@@ -1,7 +1,7 @@
 from inspect import isclass
 import re
 
-from django.urls import path
+from django.urls import URLPattern
 from django.views import View
 
 from ._abstraction import RouterAbstraction, FUNC_VIEW
@@ -14,7 +14,7 @@ class Router(RouterAbstraction):
         Attributes:
             __app_name: str | None              := Application name same as app_name in urls.py
             __prefix: str                       := Prefix for each url paths
-            __urls: list[path]                  := Urls list that can be included in urlpatterns
+            __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
             __auto_naming: bool = True          := Auto naming for every view
             __auto_trailing_slash: bool = False := Auto trailing slash for every view path
     '''
@@ -55,7 +55,7 @@ class Router(RouterAbstraction):
         return self.__auto_trailing_slash
 
     @property
-    def urls(self) -> list[path]:
+    def urls(self) -> list[URLPattern]:
         return self.__urls
 
     def route(self, url_path: str, name: str = None):
