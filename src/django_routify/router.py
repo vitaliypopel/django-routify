@@ -1,7 +1,7 @@
 from inspect import isclass
 import re
 
-from django.urls import URLPattern
+from django.urls import URLPattern, path
 from django.views import View
 
 from ._abstraction import RouterAbstraction, FUNC_VIEW
