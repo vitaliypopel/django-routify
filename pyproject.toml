@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 
 [project]
 name = "django-routify"
-version = "0.2.4"
+version = "0.2.5"
 description = "Django-Routify is a package for simple routing Views in the classic Django framework."
 
 readme = "README.md"
@@ -48,7 +48,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "django>4.0"
+    "django>=4.0"
 ]
 
 [project.urls]

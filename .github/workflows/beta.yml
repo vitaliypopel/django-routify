@@ -1,4 +1,4 @@
-name: Django-Routify v0.2.4
+name: Django-Routify v0.2.5
 
 on:
   release:
@@ -20,14 +20,24 @@ jobs:
       with:
         python-version: '3.8'
 
-    - name: Install dependencies
+    - name: Install dependencies (pip or Poetry)
       run: |
         python -m pip install --upgrade pip
-        pip install build
-        pip install -r requirements.txt
+        if [ -f "pyproject.toml" ]; then
+          pip install poetry
+          poetry install --no-dev
+        elif [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        else
+          echo "No pyproject.toml or requirements.txt found. Exiting."
+          exit 1
 
     - name: Build package
-      run: python -m build
+      run: |
+        if [ -f "pyproject.toml" ]; then
+          poetry build
+        else
+          python -m build
 
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
