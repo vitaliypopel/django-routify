@@ -31,6 +31,7 @@ jobs:
         else
           echo "No pyproject.toml or requirements.txt found. Exiting."
           exit 1
+        fi
 
     - name: Build package
       run: |
