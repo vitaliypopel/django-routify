@@ -94,7 +94,7 @@ class GenericFormViewTests(TestCase):
 class HelloViewTests(TestCase):
     NAME = ''.join(
         [
-            chr(random.randint(65, 91)) for _ in range(random.randint(5, 11))
+            chr(random.randint(65, 90)) for _ in range(random.randint(2, 20))
         ]
     ).capitalize()
     URL = reverse(
