@@ -1,10 +1,11 @@
-from inspect import isclass
-import re
-
 from django.urls import URLPattern, path
 from django.views import View
 
-from ._abstraction import RouterAbstraction, FUNC_VIEW
+from inspect import isclass
+import re
+
+from ._abstraction import RouterAbstraction
+from ._utils import FUNC_VIEW, validate_type
 
 
 class Router(RouterAbstraction):
@@ -27,12 +28,26 @@ class Router(RouterAbstraction):
             auto_trailing_slash: bool = False,
     ) -> None:
         prefix = prefix or ''
+        app_name = app_name or ''
 
-        self.__prefix = prefix.rstrip('/').lstrip('/') + '/'
+        validate_type('prefix', prefix, str)
+        validate_type('app_name', app_name, str)
+        validate_type('auto_naming', auto_naming, bool)
+        validate_type(
+            'auto_trailing_slash',
+            auto_trailing_slash,
+            bool,
+        )
+
+        if auto_trailing_slash:
+            self.__prefix = prefix.rstrip('/').lstrip('/') + '/'
+        else:
+            self.__prefix = prefix
+
         if self.__prefix == '/':
             self.__prefix = ''
 
-        self.__app_name = app_name or ''
+        self.__app_name = app_name
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
 
@@ -61,6 +76,13 @@ class Router(RouterAbstraction):
     def route(self, url_path: str, name: str = None):
         def register(view: FUNC_VIEW | View) -> FUNC_VIEW | View:
             nonlocal url_path, name
+
+            validate_type('url_path', url_path, str)
+            validate_type(
+                'name',
+                name,
+                (str, type(None)),
+            )
 
             if self.__auto_naming and not name:
                 name = view.__name__

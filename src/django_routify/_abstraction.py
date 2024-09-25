@@ -1,10 +1,6 @@
-from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern
 
 from abc import ABC, abstractmethod
-from typing import Callable, Type
-
-FUNC_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
 
 
 class RouterAbstraction(ABC):
