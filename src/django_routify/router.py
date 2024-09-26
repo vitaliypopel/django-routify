@@ -27,11 +27,8 @@ class Router(RouterAbstraction):
             auto_naming: bool = True,
             auto_trailing_slash: bool = False,
     ) -> None:
-        prefix = prefix or ''
-        app_name = app_name or ''
-
-        validate_type('prefix', prefix, str)
-        validate_type('app_name', app_name, str)
+        validate_type('prefix', prefix, (str, type(None)))
+        validate_type('app_name', app_name, (str, type(None)))
         validate_type('auto_naming', auto_naming, bool)
         validate_type(
             'auto_trailing_slash',
@@ -39,15 +36,17 @@ class Router(RouterAbstraction):
             bool,
         )
 
+        self.__prefix = prefix or ''
+
         if auto_trailing_slash:
-            self.__prefix = prefix.rstrip('/').lstrip('/') + '/'
+            self.__prefix = self.__prefix.lstrip('/').rstrip('/') + '/'
         else:
-            self.__prefix = prefix
+            self.__prefix = self.__prefix.lstrip('/')
 
         if self.__prefix == '/':
             self.__prefix = ''
 
-        self.__app_name = app_name
+        self.__app_name = app_name or ''
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
 
@@ -78,19 +77,23 @@ class Router(RouterAbstraction):
             nonlocal url_path, name
 
             validate_type('url_path', url_path, str)
-            validate_type(
-                'name',
-                name,
-                (str, type(None)),
-            )
+            validate_type('name', name, (str, type(None)))
+
+            if self.__auto_trailing_slash:
+                url_path = url_path.lstrip('/').rstrip('/')
+                if url_path != '':
+                    url_path += '/'
+
+            if url_path == '/' and self.__prefix[-1] == '/':
+                url_path = ''
 
             if self.__auto_naming and not name:
                 name = view.__name__
 
-                if name[-4:].lower() == 'view':
-                    name = name[:-4]
-
                 if isclass(view):
+                    if name[-4:].lower() == 'view':
+                        name = name[:-4]
+
                     name = '_'.join(
                         re.findall(
                             pattern='[A-Z][^A-Z]*',
@@ -99,12 +102,6 @@ class Router(RouterAbstraction):
                     )
 
                 name = name.lower()
-
-            if self.__auto_trailing_slash:
-                url_path = url_path.lstrip('/').rstrip('/') + '/'
-
-            if url_path == '/':
-                url_path = ''
 
             self.__urls.append(
                 path(
