@@ -1,4 +1,4 @@
-name: Django-Routify v0.2.7
+name: Django-Routify v0.2.7.1
 
 on:
   release:
