@@ -84,7 +84,7 @@ class Router(RouterAbstraction):
                 if url_path != '':
                     url_path += '/'
 
-            if url_path == '/' and self.__prefix[-1] == '/':
+            if url_path == '/' and self.__prefix[-1:] == '/':
                 url_path = ''
 
             if self.__auto_naming and not name:
