@@ -44,7 +44,7 @@ router = Router('/app', 'app', auto_trailing_slash=True)
 # or   = Router(prefix='/app', app_name='app', auto_trailing_slash=True)
 
 
-@router.route('/hello-world')
+@router.route('/hello-world', methods=['GET'])
 def hello_world(request: HttpRequest) -> HttpResponse:
     return HttpResponse('Hello World!')
 ```
@@ -65,8 +65,10 @@ urlpatterns = [
 ~/project/app/views.py:
 ```python
 from django.http import HttpRequest, HttpResponse
+from django.views.decorators.http import require_http_methods
 
 
+@require_http_methods(['GET'])
 def hello_world(request: HttpRequest) -> HttpResponse:
     return HttpResponse('Hello World!')
 ```
