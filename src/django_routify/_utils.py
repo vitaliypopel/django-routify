@@ -2,6 +2,7 @@ from django.http import HttpRequest, HttpResponse
 
 from typing import Callable, Any
 
+ALLOWED_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
 FUNC_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
 
 
