@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-routify"
-version = "0.2.7.1"
+version = "0.2.8"
 description = "Django-Routify is a package for simple routing Views in the classic Django framework."
 
 readme = "README.md"
@@ -33,10 +33,38 @@ maintainers = [
 classifiers = [
     "Development Status :: 5 - Production/Stable",
 
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Build Tools",
-
     "License :: OSI Approved :: MIT License",
+
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+
+    "Framework :: Django",
+    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.0",
+    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
+
+    "Environment :: Web Environment",
+
+    "Topic :: Internet",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Internet :: WWW/HTTP :: WSGI",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Server",
+
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+
+    "Topic :: System :: Networking",
+    "Topic :: Utilities",
+
+    "Typing :: Stubs Only",
+    "Typing :: Typed",
 
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -44,7 +72,14 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14", # soon
     "Programming Language :: Python :: 3 :: Only",
+
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
 ]
 
 dependencies = [
