@@ -30,23 +30,18 @@ class RouterAbstraction(ABC):
 
     @abstractmethod
     def __init__(
-            self,
-            prefix: str = None,
-            app_name: str = None,
-            auto_naming: bool = True,
-            auto_trailing_slash: bool = False,
+        self,
+        prefix: str = None,
+        app_name: str = None,
+        **kwargs,
     ) -> None:
         '''
             Initial method for Router.
-            :param: prefix: str
+            :param prefix: str | None
             :param app_name: str | None
-            :param auto_naming: bool
-            :param auto_trailing_slash: bool
+            :param kwargs: Any
         '''
-        raise NotImplementedError(
-            'Use Router from django_routify, '
-            'but not RouterAbstraction'
-        )
+        pass
 
     @property
     @abstractmethod
@@ -56,7 +51,7 @@ class RouterAbstraction(ABC):
             Prefix for each url paths
             :return: str
         '''
-        ...
+        pass
 
     @property
     @abstractmethod
@@ -66,7 +61,7 @@ class RouterAbstraction(ABC):
             Application name same as app_name in urls.py
             :return: str
         '''
-        ...
+        pass
 
     @property
     @abstractmethod
@@ -76,7 +71,7 @@ class RouterAbstraction(ABC):
             Auto naming for every view
             :return: bool
         '''
-        ...
+        pass
 
     @property
     @abstractmethod
@@ -86,7 +81,7 @@ class RouterAbstraction(ABC):
             Auto trailing slash for every view path
             :return: bool
         '''
-        ...
+        pass
 
     @property
     @abstractmethod
@@ -96,17 +91,17 @@ class RouterAbstraction(ABC):
             List of URLPatterns that can be included in urlpatterns
             :return: list[django.urls.URLPattern]
         '''
-        ...
+        pass
 
     @abstractmethod
-    def route(self, url_path: str, name: str = None):
+    def route(self, url_path: str, **kwargs):
         '''
             Router method that register view in urlpatterns with django.urls.path
             :param url_path: str
-            :param name: str | None
+            :param kwargs: Any
             :return: Any
         '''
-        ...
+        pass
 
     @abstractmethod
     def __str__(self) -> str:
@@ -114,7 +109,7 @@ class RouterAbstraction(ABC):
             Router string representation
             :return: str
         '''
-        ...
+        pass
 
     @abstractmethod
     def __repr__(self) -> str:
@@ -122,4 +117,4 @@ class RouterAbstraction(ABC):
             Router string representation
             :return: str
         '''
-        ...
+        pass

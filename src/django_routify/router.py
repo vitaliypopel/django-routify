@@ -1,7 +1,7 @@
 from django.urls import URLPattern, path
+from django.views.decorators.http import require_http_methods
 from django.views import View
 
-from inspect import isclass
 import re
 
 from ._abstraction import RouterAbstraction
@@ -21,27 +21,24 @@ class Router(RouterAbstraction):
     '''
 
     def __init__(
-            self,
-            prefix: str = None,
-            app_name: str = None,
-            auto_naming: bool = True,
-            auto_trailing_slash: bool = False,
+        self,
+        prefix: str = None,
+        app_name: str = None,
+        **kwargs,
     ) -> None:
+        auto_naming = kwargs.get('auto_naming', True)
+        auto_trailing_slash = kwargs.get('auto_trailing_slash', False)
+
         validate_type('prefix', prefix, (str, type(None)))
         validate_type('app_name', app_name, (str, type(None)))
         validate_type('auto_naming', auto_naming, bool)
-        validate_type(
-            'auto_trailing_slash',
-            auto_trailing_slash,
-            bool,
-        )
+        validate_type('auto_trailing_slash', auto_trailing_slash, bool)
 
         self.__prefix = prefix or ''
+        self.__prefix = self.__prefix.lstrip('/')
 
         if auto_trailing_slash:
-            self.__prefix = self.__prefix.lstrip('/').rstrip('/') + '/'
-        else:
-            self.__prefix = self.__prefix.lstrip('/')
+            self.__prefix = self.__prefix.rstrip('/') + '/'
 
         if self.__prefix == '/':
             self.__prefix = ''
@@ -72,9 +69,11 @@ class Router(RouterAbstraction):
     def urls(self) -> list[URLPattern]:
         return self.__urls
 
-    def route(self, url_path: str, name: str = None):
+    def route(self, url_path: str, **kwargs):
         def register(view: FUNC_VIEW | View) -> FUNC_VIEW | View:
-            nonlocal url_path, name
+            nonlocal url_path, kwargs
+
+            name: str | None = kwargs.get('name', None)
 
             validate_type('url_path', url_path, str)
             validate_type('name', name, (str, type(None)))
@@ -90,7 +89,7 @@ class Router(RouterAbstraction):
             if self.__auto_naming and not name:
                 name = view.__name__
 
-                if isclass(view):
+                if hasattr(view, 'as_view'):
                     if name[-4:].lower() == 'view':
                         name = name[:-4]
 
@@ -103,10 +102,15 @@ class Router(RouterAbstraction):
 
                 name = name.lower()
 
+            as_view = view
+            if hasattr(view, 'as_view'):
+                view: View
+                as_view = view.as_view()
+
             self.__urls.append(
                 path(
                     url_path,
-                    view.as_view() if isclass(view) else view,
+                    as_view,
                     name=name,
                 )
             )
