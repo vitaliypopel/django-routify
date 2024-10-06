@@ -1,11 +1,17 @@
-from django.urls import URLPattern, path
+from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
+
+from django.urls import URLPattern, path
 from django.views import View
 
 import re
 
 from ._abstraction import RouterAbstraction
-from ._utils import FUNC_VIEW, validate_type
+from ._utils import (
+    ALLOWED_METHODS,
+    FUNC_VIEW,
+    validate_type,
+)
 
 
 class Router(RouterAbstraction):
@@ -74,9 +80,11 @@ class Router(RouterAbstraction):
             nonlocal url_path, kwargs
 
             name: str | None = kwargs.get('name', None)
+            methods: list[str] | None = kwargs.get('methods', None)
 
             validate_type('url_path', url_path, str)
             validate_type('name', name, (str, type(None)))
+            validate_type('methods', methods, (list, type(None)))
 
             if self.__auto_trailing_slash:
                 url_path = url_path.lstrip('/').rstrip('/')
@@ -101,6 +109,28 @@ class Router(RouterAbstraction):
                     )
 
                 name = name.lower()
+
+            if methods:
+                for i in range(len(methods)):
+                    methods[i] = methods[i].upper()
+                    if methods[i] not in ALLOWED_METHODS:
+                        raise ValueError(
+                            f'Method "{methods[i]}" is not in '
+                            f'allowed methods {ALLOWED_METHODS}'
+                        )
+
+                require_http_methods_decorator = require_http_methods(methods)
+
+                if hasattr(view, 'as_view'):
+                    # wrap Class-Based-View into decorator with require methods
+                    # using method_decorator
+                    view = method_decorator(
+                        decorator=require_http_methods_decorator,
+                        name='dispatch',
+                    )(view)
+                else:
+                    # wrap Function-Based-View into decorator with require methods
+                    view = require_http_methods_decorator(view)
 
             as_view = view
             if hasattr(view, 'as_view'):
