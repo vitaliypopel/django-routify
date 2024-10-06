@@ -11,7 +11,7 @@ from django_routify import Router
 router = Router('example/', 'example_app')
 
 
-@router.route('')
+@router.route('', methods=['GET'])
 def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse('''
         <h2><ins>Index</ins> page</h2>
@@ -19,7 +19,7 @@ def index(request: HttpRequest) -> HttpResponse:
     ''')
 
 
-@router.route('async/', name='async')
+@router.route('async/', name='async', methods=['Get'])
 async def async_view(request: HttpRequest) -> JsonResponse:
     return JsonResponse(
         {
@@ -29,7 +29,7 @@ async def async_view(request: HttpRequest) -> JsonResponse:
     )
 
 
-@router.route('template/')
+@router.route('template/', methods=['get'])
 class GenericTemplateView(TemplateView):
     template_name = 'template.html'
 
@@ -39,13 +39,13 @@ class GenericTemplateView(TemplateView):
         return context
 
 
-@router.route('redirect/')
+@router.route('redirect/', methods=['GET'])
 class GenericRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs) -> str:
         return reverse('example_app:generic_form')
 
 
-@router.route('form/')
+@router.route('form/', methods=['get', 'post'])
 class GenericFormView(FormView):
     form_class = Form
     template_name = 'form.html'
@@ -57,7 +57,7 @@ class GenericFormView(FormView):
         ))
 
 
-@router.route('<slug:name>/')
+@router.route('<slug:name>/', methods=['GET'])
 class HelloView(View):
     async def get(self, request: HttpRequest, name: str) -> HttpResponse:
         return HttpResponse(f'''
