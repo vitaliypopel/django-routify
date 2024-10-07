@@ -22,6 +22,12 @@ class IndexViewTests(TestCase):
         )
         self.assertIn(PREFIX, self.URL)
 
+    # POST method not allowed
+    def test_post_method(self):
+        response = self.client.post(self.URL)
+        self.assertEqual(response.status_code, 405)
+        self.assertIn(PREFIX, self.URL)
+
 
 class AsyncViewTests(TestCase):
     URL = reverse(f'{APP_NAME}:async')
@@ -44,6 +50,12 @@ class AsyncViewTests(TestCase):
         )
         self.assertIn(PREFIX, self.URL)
 
+    # POST method not allowed
+    def test_post_method(self):
+        response = self.client.post(self.URL)
+        self.assertEqual(response.status_code, 405)
+        self.assertIn(PREFIX, self.URL)
+
 
 class GenericTemplateViewTests(TestCase):
     URL = reverse(f'{APP_NAME}:generic_template')
@@ -55,6 +67,12 @@ class GenericTemplateViewTests(TestCase):
         self.assertTemplateUsed(response, self.TEMPLATE_NAME)
         self.assertIn(PREFIX, self.URL)
 
+    # POST method not allowed
+    def test_post_method(self):
+        response = self.client.post(self.URL)
+        self.assertEqual(response.status_code, 405)
+        self.assertIn(PREFIX, self.URL)
+
 
 class GenericRedirectViewTests(TestCase):
     URL = reverse(f'{APP_NAME}:generic_redirect')
@@ -64,6 +82,12 @@ class GenericRedirectViewTests(TestCase):
         response = self.client.get(self.URL)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.headers['Location'], self.SUCCESS_URL)
+        self.assertIn(PREFIX, self.URL)
+
+    # POST method not allowed
+    def test_post_method(self):
+        response = self.client.post(self.URL)
+        self.assertEqual(response.status_code, 405)
         self.assertIn(PREFIX, self.URL)
 
 
