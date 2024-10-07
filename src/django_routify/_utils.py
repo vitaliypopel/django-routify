@@ -7,9 +7,9 @@ FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
 
 
 def validate_type(
-        obj_name: str,
-        obj: object,
-        expected_type: type | tuple[Any, ...]
+    obj_name: str,
+    obj: object,
+    expected_type: type | tuple[Any, ...],
 ) -> None:
     '''
         Function validator for router class.
