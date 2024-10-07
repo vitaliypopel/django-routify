@@ -3,7 +3,10 @@ from django.http import HttpRequest, HttpResponse
 from typing import Callable, Any
 
 ALLOWED_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
+'''ALLOWED_METHODS is a valid HTTP methods'''
+
 FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
+'''FUNC_BASED_VIEW is a type of Django function based views'''
 
 
 def validate_type(
@@ -22,6 +25,6 @@ def validate_type(
 
     if not isinstance(obj, expected_type):
         raise TypeError(
-            f"Expected '{obj_name}' to be of type {expected_type}, "
-            f"instead got {type(obj).__name__}"
+            f'Expected "{obj_name}" to be of type {expected_type}, '
+            f'instead got {type(obj).__name__}'
         )
