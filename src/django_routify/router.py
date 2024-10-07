@@ -5,11 +5,12 @@ from django.urls import URLPattern, path
 from django.views import View
 
 import re
+from inspect import isclass
 
 from ._abstraction import RouterAbstraction
 from ._utils import (
     ALLOWED_METHODS,
-    FUNC_VIEW,
+    FUNC_BASED_VIEW,
     validate_type,
 )
 
@@ -76,8 +77,12 @@ class Router(RouterAbstraction):
         return self.__urls
 
     def route(self, url_path: str, **kwargs):
-        def register(view: FUNC_VIEW | View) -> FUNC_VIEW | View:
+        def register(view: FUNC_BASED_VIEW | View) -> FUNC_BASED_VIEW | View:
             nonlocal url_path, kwargs
+
+            class_based = False
+            if isclass(view) and issubclass(view, View):
+                class_based = True
 
             name: str | None = kwargs.get('name', None)
             methods: list[str] | None = kwargs.get('methods', None)
@@ -97,7 +102,7 @@ class Router(RouterAbstraction):
             if self.__auto_naming and not name:
                 name = view.__name__
 
-                if hasattr(view, 'as_view'):
+                if class_based:
                     if name[-4:].lower() == 'view':
                         name = name[:-4]
 
@@ -121,7 +126,7 @@ class Router(RouterAbstraction):
 
                 require_http_methods_decorator = require_http_methods(methods)
 
-                if hasattr(view, 'as_view'):
+                if class_based:
                     # wrap Class-Based-View into decorator with require methods
                     # using method_decorator
                     view = method_decorator(
@@ -133,7 +138,7 @@ class Router(RouterAbstraction):
                     view = require_http_methods_decorator(view)
 
             as_view = view
-            if hasattr(view, 'as_view'):
+            if class_based:
                 view: View
                 as_view = view.as_view()
 
