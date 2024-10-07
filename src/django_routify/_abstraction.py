@@ -65,6 +65,16 @@ class RouterAbstraction(ABC):
 
     @property
     @abstractmethod
+    def urls(self) -> list[URLPattern]:
+        '''
+            urls getter\n
+            List of URLPatterns that can be included in urlpatterns
+            :return: list[django.urls.URLPattern]
+        '''
+        pass
+
+    @property
+    @abstractmethod
     def auto_naming(self) -> bool:
         '''
             auto_naming getter\n
@@ -80,16 +90,6 @@ class RouterAbstraction(ABC):
             auto_trailing_slash getter\n
             Auto trailing slash for every view path
             :return: bool
-        '''
-        pass
-
-    @property
-    @abstractmethod
-    def urls(self) -> list[URLPattern]:
-        '''
-            urls getter\n
-            List of URLPatterns that can be included in urlpatterns
-            :return: list[django.urls.URLPattern]
         '''
         pass
 

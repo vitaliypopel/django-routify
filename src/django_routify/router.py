@@ -65,16 +65,16 @@ class Router(RouterAbstraction):
         return self.__app_name
 
     @property
+    def urls(self) -> list[URLPattern]:
+        return self.__urls
+
+    @property
     def auto_naming(self) -> bool:
         return self.__auto_naming
 
     @property
     def auto_trailing_slash(self) -> bool:
         return self.__auto_trailing_slash
-
-    @property
-    def urls(self) -> list[URLPattern]:
-        return self.__urls
 
     def route(self, url_path: str, **kwargs):
         def register(view: FUNC_BASED_VIEW | View) -> FUNC_BASED_VIEW | View:
