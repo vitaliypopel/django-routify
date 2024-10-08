@@ -1,18 +1,19 @@
+from django.http import HttpRequest, HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 
 from django.urls import URLPattern, path
 from django.views import View
 
-import re
 from inspect import isclass
+from typing import Callable
+import re
 
 from ._abstraction import BaseRouter
-from ._utils import (
-    ALLOWED_METHODS,
-    FUNC_BASED_VIEW,
-    validate_type,
-)
+from .validator import _validate_type
+
+FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
+'FUNC_BASED_VIEW is a type of Django function based views'
 
 
 class Router(BaseRouter):
@@ -20,6 +21,7 @@ class Router(BaseRouter):
         Router class for routing your views.
 
         Attributes:
+            ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
             __app_name: str | None              := Application name same as app_name in urls.py
             __prefix: str                       := Prefix for each url paths
             __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
@@ -36,10 +38,10 @@ class Router(BaseRouter):
         auto_naming = kwargs.get('auto_naming', True)
         auto_trailing_slash = kwargs.get('auto_trailing_slash', False)
 
-        validate_type('prefix', prefix, (str, type(None)))
-        validate_type('app_name', app_name, (str, type(None)))
-        validate_type('auto_naming', auto_naming, bool)
-        validate_type('auto_trailing_slash', auto_trailing_slash, bool)
+        _validate_type('prefix', prefix, (str, type(None)))
+        _validate_type('app_name', app_name, (str, type(None)))
+        _validate_type('auto_naming', auto_naming, bool)
+        _validate_type('auto_trailing_slash', auto_trailing_slash, bool)
 
         self.__prefix = prefix or ''
         self.__prefix = self.__prefix.lstrip('/')
@@ -87,9 +89,9 @@ class Router(BaseRouter):
             name: str | None = kwargs.get('name', None)
             methods: list[str] | None = kwargs.get('methods', None)
 
-            validate_type('url_path', url_path, str)
-            validate_type('name', name, (str, type(None)))
-            validate_type('methods', methods, (list, type(None)))
+            _validate_type('url_path', url_path, str)
+            _validate_type('name', name, (str, type(None)))
+            _validate_type('methods', methods, (list, type(None)))
 
             if self.__auto_trailing_slash:
                 url_path = url_path.lstrip('/').rstrip('/')
@@ -118,10 +120,10 @@ class Router(BaseRouter):
             if methods:
                 for i in range(len(methods)):
                     methods[i] = methods[i].upper()
-                    if methods[i] not in ALLOWED_METHODS:
+                    if methods[i] not in self.ALLOWED_METHODS:
                         raise ValueError(
                             f'Method "{methods[i]}" is not in '
-                            f'allowed methods {ALLOWED_METHODS}'
+                            f'allowed methods {self.ALLOWED_METHODS}'
                         )
 
                 require_http_methods_decorator = require_http_methods(methods)

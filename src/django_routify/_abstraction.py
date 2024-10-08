@@ -34,6 +34,7 @@ class BaseRouter(ABC):
     Do not use it in your project!
 
     Attributes:
+        ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
         __app_name: str | None              := Application name same as app_name in urls.py
         __prefix: str                       := Prefix for each url paths
         __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
@@ -41,6 +42,9 @@ class BaseRouter(ABC):
         __auto_trailing_slash: bool = False := Auto trailing slash for every view path
         __dynamic_pattern: Pattern          := Dynamic pattern for parsing and normalizing custom urls
     '''
+
+    ALLOWED_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
+    'ALLOWED_METHODS is a valid HTTP methods'
 
     __app_name: str | None
     'Application name same as app_name in urls.py'

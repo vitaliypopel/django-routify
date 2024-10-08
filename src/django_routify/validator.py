@@ -1,15 +1,7 @@
-from django.http import HttpRequest, HttpResponse
-
-from typing import Callable, Any
-
-ALLOWED_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
-'''ALLOWED_METHODS is a valid HTTP methods'''
-
-FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
-'''FUNC_BASED_VIEW is a type of Django function based views'''
+from typing import Any
 
 
-def validate_type(
+def _validate_type(
     obj_name: str,
     obj: object,
     expected_type: type | tuple[Any, ...],
