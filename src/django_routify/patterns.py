@@ -15,7 +15,12 @@ class Pattern(BasePattern):
 
     REGEX = r''
 
-    def normalize(self, custom_url: str, view: Any) -> str:
+    def normalize(
+        self,
+        custom_url: str,
+        view: Any,
+        class_based: bool,
+    ) -> str:
         django_url = custom_url
 
         if self.REGEX == '':

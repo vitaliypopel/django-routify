@@ -19,12 +19,18 @@ class BasePattern(ABC):
     'Regular expression for parsing url | By default REGEX equals ""'
 
     @abstractmethod
-    def normalize(self, custom_url: str, view: Any) -> str:
+    def normalize(
+        self,
+        custom_url: str,
+        view: Any,
+        class_based: bool,
+    ) -> str:
         '''
         Method for normalizing url using REGEX.
         Returns url with Django format style.
         :param custom_url: str
         :param view: FUNC_BASED_VIEW | View
+        :param class_based: bool
         :return: str
         '''
         pass
