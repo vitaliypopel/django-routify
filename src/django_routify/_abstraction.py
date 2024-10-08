@@ -126,7 +126,7 @@ class BaseRouter(ABC):
         '''
         dynamic_pattern getter\n
         Dynamic pattern for parsing and normalizing custom urls
-        :return: Pattern
+        :return: django_routify.patterns.Pattern
         '''
         pass
 
