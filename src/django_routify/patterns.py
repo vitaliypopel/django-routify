@@ -6,13 +6,13 @@ class Pattern(BasePattern):
         pass
 
 
-class ColonPattern(BasePattern):
+class ColonPattern(Pattern):
     REGEX = r':(\w+)'
 
 
-class CurlyPattern(BasePattern):
+class CurlyPattern(Pattern):
     REGEX = r'\{(\w+)\}'
 
 
-class AnglePattern(BasePattern):
+class AnglePattern(Pattern):
     REGEX = r'<(\w+)>'
