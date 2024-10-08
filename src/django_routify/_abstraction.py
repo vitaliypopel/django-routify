@@ -25,6 +25,7 @@ class BasePattern(ABC):
         :param custom_url: str
         :return: str
         '''
+        pass
 
 
 class BaseRouter(ABC):

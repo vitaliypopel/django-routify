@@ -2,7 +2,7 @@ from ._abstraction import BasePattern
 
 
 class Pattern(BasePattern):
-    def parse(self):
+    def normalize(self, custom_url: str) -> str:
         pass
 
 
