@@ -1,6 +1,7 @@
+from ._abstraction import BasePattern
 
 
-class BasePattern:
+class Pattern(BasePattern):
     def parse(self):
         pass
 

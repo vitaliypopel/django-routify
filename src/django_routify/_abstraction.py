@@ -1,9 +1,15 @@
-from django.urls import URLPattern
-
 from abc import ABC, abstractmethod
 
+from django.urls import URLPattern
 
-class RouterAbstraction(ABC):
+from .patterns import Pattern
+
+
+class BasePattern(ABC):
+    pass
+
+
+class BaseRouter(ABC):
     '''
         Abstract class for Router.
         Do not use it in your project!
@@ -14,6 +20,7 @@ class RouterAbstraction(ABC):
             __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
             __auto_naming: bool = True          := Auto naming for every view
             __auto_trailing_slash: bool = False := Auto trailing slash for every view path
+            __dynamic_pattern: Pattern          := ...
     '''
 
     __app_name: str | None
@@ -27,6 +34,8 @@ class RouterAbstraction(ABC):
     'Auto naming for every view | By default equals True'
     __auto_trailing_slash: bool
     'Auto trailing slash for every view path | By default equals False'
+    __dynamic_pattern: Pattern
+    '''...'''
 
     @abstractmethod
     def __init__(
@@ -90,6 +99,15 @@ class RouterAbstraction(ABC):
             auto_trailing_slash getter\n
             Auto trailing slash for every view path
             :return: bool
+        '''
+        pass
+
+    @property
+    @abstractmethod
+    def dynamic_pattern(self) -> Pattern:
+        '''
+            ...
+            :return: BasePattern
         '''
         pass
 

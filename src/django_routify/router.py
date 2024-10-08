@@ -7,7 +7,7 @@ from django.views import View
 import re
 from inspect import isclass
 
-from ._abstraction import RouterAbstraction
+from ._abstraction import BaseRouter
 from ._utils import (
     ALLOWED_METHODS,
     FUNC_BASED_VIEW,
@@ -15,7 +15,7 @@ from ._utils import (
 )
 
 
-class Router(RouterAbstraction):
+class Router(BaseRouter):
     '''
         Router class for routing your views.
 
