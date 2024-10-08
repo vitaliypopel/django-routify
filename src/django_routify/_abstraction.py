@@ -35,6 +35,29 @@ class BasePattern(ABC):
         '''
         pass
 
+    @staticmethod
+    @abstractmethod
+    def _get_annotations(
+        view: Any,
+        class_based: bool,
+    ) -> dict[str, type]:
+        '''
+        Method for getting annotations from difference types of views
+        :param view: Any
+        :param class_based: bool
+        :return: dict[str, str]
+        '''
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def _get_django_type(python_type: type) -> str:
+        '''
+        Method for getting Django type for dynamic URL from Python type
+        :param python_type: type
+        :return: str
+        '''
+
 
 class BaseRouter(ABC):
     '''
