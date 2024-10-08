@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any
 
 from django.urls import URLPattern
 
@@ -18,11 +19,12 @@ class BasePattern(ABC):
     'Regular expression for parsing url | By default REGEX equals ""'
 
     @abstractmethod
-    def normalize(self, custom_url: str) -> str:
+    def normalize(self, custom_url: str, view: Any) -> str:
         '''
         Method for normalizing url using REGEX.
         Returns url with Django format style.
         :param custom_url: str
+        :param view: FUNC_BASED_VIEW | View
         :return: str
         '''
         pass

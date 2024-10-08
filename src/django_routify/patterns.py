@@ -1,6 +1,7 @@
 import re
+import uuid
 
-from rgx import REGEX
+from typing import Any
 from ._abstraction import BasePattern
 
 
@@ -14,10 +15,10 @@ class Pattern(BasePattern):
 
     REGEX = r''
 
-    def normalize(self, custom_url: str) -> str:
+    def normalize(self, custom_url: str, view: Any) -> str:
         django_url = custom_url
 
-        if REGEX == '':
+        if self.REGEX == '':
             return django_url
 
         pass
