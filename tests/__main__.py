@@ -1,6 +1,6 @@
 import unittest
 
-from .urls import (
+from .trailing_slash_tests.urls import (
     default_with_trailing_urlpatterns,
     routify_with_trailing_urlpatterns,
     default_without_trailing_urlpatterns,
