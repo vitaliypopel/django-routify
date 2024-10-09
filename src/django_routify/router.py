@@ -18,15 +18,15 @@ FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
 
 class Router(BaseRouter):
     '''
-        Router class for routing your views.
+    Router class for routing your views.
 
-        Attributes:
-            ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
-            __app_name: str | None              := Application name same as app_name in urls.py
-            __prefix: str                       := Prefix for each url paths
-            __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
-            __auto_naming: bool = True          := Auto naming for every view
-            __auto_trailing_slash: bool = False := Auto trailing slash for every view path
+    Attributes:
+        ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
+        __app_name: str | None              := Application name same as app_name in urls.py
+        __prefix: str                       := Prefix for each url paths
+        __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
+        __auto_naming: bool = True          := Auto naming for every view
+        __auto_trailing_slash: bool = False := Auto trailing slash for every view path
     '''
 
     def __init__(

@@ -5,10 +5,10 @@ from .router import Router
 
 def include_router(router: Router) -> URLResolver:
     '''
-        Include router is a function that making include registered urls.
-        Returning URLResolver which can be inserted into urlpatterns.
-        :param router: Router
-        :return: django.urls.URLResolver
+    Include router is a function that making include registered urls.
+    Returning URLResolver which can be inserted into urlpatterns.
+    :param router: Router
+    :return: django.urls.URLResolver
     '''
 
     if not isinstance(router, Router):
