@@ -110,6 +110,13 @@ class Router(BaseRouter):
             _validate_type('name', name, (str, type(None)))
             _validate_type('methods', methods, (list, type(None)))
 
+            if self.__dynamic_pattern.is_custom(self.__prefix):
+                self.__prefix = self.__dynamic_pattern.normalize(
+                    custom_url=self.__prefix,
+                    view=view,
+                    class_based=class_based,
+                )
+
             if self.__auto_trailing_slash:
                 url_path = url_path.lstrip('/').rstrip('/')
                 if url_path != '':
@@ -117,6 +124,13 @@ class Router(BaseRouter):
 
             if url_path == '/' and self.__prefix[-1:] == '/':
                 url_path = ''
+
+            if self.__dynamic_pattern.is_custom(url_path):
+                url_path = self.__dynamic_pattern.normalize(
+                    custom_url=url_path,
+                    view=view,
+                    class_based=class_based,
+                )
 
             if self.__auto_naming and not name:
                 name = view.__name__
