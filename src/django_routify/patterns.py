@@ -32,28 +32,32 @@ class Pattern(BasePattern):
         view: Any,
         class_based: bool,
     ) -> dict[str, type]:
+        annotations = {}
+
         if class_based:
             if hasattr(view, 'parameters'):
                 # getting annotations from attribute
-                return view.parameters
+                annotations =  view.parameters
             elif hasattr(view, 'get'):
                 # getting annotations from params in GET method
-                return view.get.__annotations__
+                annotations =  view.get.__annotations__
             elif hasattr(view, 'post'):
                 # getting annotations from params in POST method
-                return view.post.__annotations__
+                annotations =  view.post.__annotations__
             elif hasattr(view, 'put'):
                 # getting annotations from params in PUT method
-                return view.put.__annotations__
+                annotations =  view.put.__annotations__
             elif hasattr(view, 'patch'):
                 # getting annotations from params in PATCH method
-                return view.patch.__annotations__
+                annotations =  view.patch.__annotations__
             elif hasattr(view, 'delete'):
                 # getting annotations from params in DELETE method
-                return view.delete.__annotations__
+                annotations =  view.delete.__annotations__
         else:
             # getting annotations from function params
-            return view.__annotations__
+            annotations =  view.__annotations__
+
+        return annotations
 
     @staticmethod
     def _get_django_type(python_type: type) -> str:
