@@ -11,6 +11,12 @@ import re
 
 from ._abstraction import BaseRouter
 from .validator import _validate_type
+from .patterns import (
+    Pattern,
+    ColonPattern,
+    CurlyPattern,
+    AnglePattern,
+)
 
 FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
 'FUNC_BASED_VIEW is a type of Django function based views'
@@ -37,11 +43,17 @@ class Router(BaseRouter):
     ) -> None:
         auto_naming = kwargs.get('auto_naming', True)
         auto_trailing_slash = kwargs.get('auto_trailing_slash', False)
+        DynamicPattern = kwargs.get('dynamic_pattern', Pattern)
 
         _validate_type('prefix', prefix, (str, type(None)))
         _validate_type('app_name', app_name, (str, type(None)))
         _validate_type('auto_naming', auto_naming, bool)
         _validate_type('auto_trailing_slash', auto_trailing_slash, bool)
+        _validate_type(
+            'dynamic_pattern',
+            DynamicPattern,
+            (Pattern, ColonPattern, CurlyPattern, AnglePattern),
+        )
 
         self.__prefix = prefix or ''
         self.__prefix = self.__prefix.lstrip('/')
@@ -55,6 +67,7 @@ class Router(BaseRouter):
         self.__app_name = app_name or ''
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
+        self.__dynamic_pattern = DynamicPattern()
 
         self.__urls = []
 
@@ -77,6 +90,10 @@ class Router(BaseRouter):
     @property
     def auto_trailing_slash(self) -> bool:
         return self.__auto_trailing_slash
+
+    @property
+    def dynamic_pattern(self) -> Pattern:
+        return self.__dynamic_pattern
 
     def route(self, url_path: str, **kwargs):
         def register(view: FUNC_BASED_VIEW | View) -> FUNC_BASED_VIEW | View:
