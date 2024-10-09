@@ -3,8 +3,6 @@ from typing import Any
 
 from django.urls import URLPattern
 
-from .patterns import Pattern
-
 
 class BasePattern(ABC):
     '''
@@ -57,6 +55,9 @@ class BasePattern(ABC):
         :param python_type: type
         :return: str
         '''
+
+
+from .patterns import Pattern
 
 
 class BaseRouter(ABC):
