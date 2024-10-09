@@ -33,9 +33,8 @@ class BasePattern(ABC):
         """
         pass
 
-    @staticmethod
     @abstractmethod
-    def _get_url_params(custom_url: str) -> list[str]:
+    def _get_url_params(self, custom_url: str) -> list[str]:
         """
         Method for getting url params from custom url
         :param custom_url: str
@@ -43,9 +42,8 @@ class BasePattern(ABC):
         """
         pass
 
-    @staticmethod
     @abstractmethod
-    def _get_dynamic_params(custom_url: str) -> list[str]:
+    def _get_dynamic_params(self, custom_url: str) -> list[str]:
         """
         Method for getting full dynamic params from custom url
         :param custom_url: str
