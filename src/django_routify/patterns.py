@@ -22,29 +22,40 @@ class Pattern(BasePattern):
         class_based: bool,
     ) -> str:
         django_url = custom_url
-        if self.REGEX == '':
+        if self.REGEX == '' or not self.is_custom(custom_url):
             return django_url
 
         annotations = self._get_annotations(
             view=view, class_based=class_based,
         )
 
-        url_params = re.findall(self.REGEX, custom_url)
-        dynamic_params = re.findall(
-            self.REGEX.replace('(', '').replace(')', ''),
-            custom_url,
-        )
+        url_params = self._get_url_params(custom_url)
+        dynamic_params = self._get_dynamic_params(custom_url)
 
         for url_param, dynamic_param in zip(url_params, dynamic_params):
             python_type = annotations.get(url_param)
             django_type = self._get_django_type(python_type)
 
-            custom_url = custom_url.replace(
+            django_url = django_url.replace(
                 dynamic_param,
                 f'<{django_type}:{url_param}>',
             )
 
-        return custom_url
+        return django_url
+
+    def _get_url_params(self, custom_url: str) -> list[str]:
+        return re.findall(self.REGEX, custom_url)
+
+    def _get_dynamic_params(self, custom_url: str) -> list[str]:
+        return re.findall(
+            self.REGEX.replace('(', '').replace(')', ''),
+            custom_url,
+        )
+
+    def is_custom(self, url_: str) -> bool:
+        return bool(
+            len(self._get_dynamic_params(url_))
+        )
 
     @staticmethod
     def _get_annotations(
