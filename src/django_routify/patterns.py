@@ -11,9 +11,11 @@ class Pattern(BasePattern):
 
     Attributes:
         REGEX: str = ''
+        DJANGO_REGEX = '<[a-zA-Z]+:([a-zA-Z]+)>'
     """
 
-    REGEX = r''
+    REGEX = ''
+    DJANGO_REGEX = r'<[a-zA-Z]+:([a-zA-Z]+)>'
 
     def normalize(
         self,
@@ -53,9 +55,18 @@ class Pattern(BasePattern):
         )
 
     def is_custom(self, url_: str) -> bool:
-        return bool(
-            len(self._get_dynamic_params(url_))
-        )
+        is_custom = False
+
+        params = re.findall(self.DJANGO_REGEX, url_)
+        custom_params = self._get_url_params(url_)
+
+        for custom_param in custom_params:
+            if custom_param not in params:
+                is_custom = True
+                break
+
+        return is_custom
+
 
     @staticmethod
     def _get_annotations(
@@ -114,6 +125,7 @@ class ColonPattern(Pattern):
 
     Attributes:
         REGEX: str = ':(\w+)'
+        DJANGO_REGEX = '<[a-zA-Z]+:([a-zA-Z]+)>'
     """
 
     REGEX = r':(\w+)'
@@ -129,6 +141,7 @@ class CurlyPattern(Pattern):
 
     Attributes:
         REGEX: str = '\{(\w+)\}'
+        DJANGO_REGEX = '<[a-zA-Z]+:([a-zA-Z]+)>'
     """
 
     REGEX = r'\{(\w+)\}'
@@ -144,6 +157,7 @@ class AnglePattern(Pattern):
 
     Attributes:
         REGEX: str = '<(\w+)>'
+        DJANGO_REGEX = '<[a-zA-Z]+:([a-zA-Z]+)>'
     """
 
     REGEX = r'<(\w+)>'
