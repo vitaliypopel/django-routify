@@ -86,6 +86,12 @@ class Pattern(BasePattern):
             return 'uuid'
         return 'slug' # by default
 
+    def __str__(self) -> str:
+        return f'{self.__class__.__name__}(REGEX=r"{self.REGEX}")'
+
+    def __repr__(self) -> str:
+        return str(self)
+
 
 class ColonPattern(Pattern):
     r'''

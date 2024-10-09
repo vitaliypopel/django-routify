@@ -56,6 +56,22 @@ class BasePattern(ABC):
         :return: str
         '''
 
+    @abstractmethod
+    def __str__(self) -> str:
+        '''
+        Pattern string representation
+        :return: str
+        '''
+        pass
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        '''
+        Pattern string representation
+        :return: str
+        '''
+        pass
+
 
 from .patterns import Pattern
 
