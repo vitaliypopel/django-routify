@@ -61,9 +61,10 @@ class TrailingSlashTests(unittest.TestCase):
 
 class DynamicUrlPatternsTests(unittest.TestCase):
     def test_urls_with_dynamic_urls(self):
+        # If urlpatterns with custom dynamic patterns are not the same test will be failed.
         for url_resolver in default_urlpatterns:
-            length_of_urls = len(url_resolver.url_patterns)
-            for i in range(length_of_urls):
+
+            for i in range(len(url_resolver.url_patterns)):
                 default_pattern = default_urlpatterns[0].url_patterns[i].pattern
                 default_based_pattern = default_based_urlpatterns[0].url_patterns[i].pattern
                 colon_based_pattern = colon_based_urlpatterns[0].url_patterns[i].pattern
