@@ -35,6 +35,26 @@ class BasePattern(ABC):
 
     @staticmethod
     @abstractmethod
+    def _get_url_params(custom_url: str) -> list[str]:
+        """
+        Method for getting url params from custom url
+        :param custom_url: str
+        :return: list[str]
+        """
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def _get_dynamic_params(custom_url: str) -> list[str]:
+        """
+        Method for getting full dynamic params from custom url
+        :param custom_url: str
+        :return: list[str]
+        """
+        pass
+
+    @staticmethod
+    @abstractmethod
     def _get_annotations(
         view: Any,
         class_based: bool,
@@ -54,6 +74,16 @@ class BasePattern(ABC):
         Method for getting Django type for dynamic URL from Python type
         :param python_type: type
         :return: str
+        """
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def is_custom(url_: str) -> bool:
+        """
+        Is url has params from current pattern
+        :param url_: str
+        :return: bool
         """
 
     @abstractmethod
