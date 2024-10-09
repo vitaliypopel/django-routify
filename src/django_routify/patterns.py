@@ -25,7 +25,26 @@ class Pattern(BasePattern):
         if self.REGEX == '':
             return django_url
 
-        pass
+        annotations = self._get_annotations(
+            view=view, class_based=class_based,
+        )
+
+        url_params = re.findall(self.REGEX, custom_url)
+        dynamic_params = re.findall(
+            self.REGEX.replace('(', '').replace(')', ''),
+            custom_url,
+        )
+
+        for url_param, dynamic_param in zip(url_params, dynamic_params):
+            python_type = annotations.get(url_param)
+            django_type = self._get_django_type(python_type)
+
+            custom_url = custom_url.replace(
+                dynamic_param,
+                f'<{django_type}:{url_param}>',
+            )
+
+        return custom_url
 
     @staticmethod
     def _get_annotations(
