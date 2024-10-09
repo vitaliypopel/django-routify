@@ -6,11 +6,11 @@ from ._abstraction import BasePattern
 
 
 class Pattern(BasePattern):
-    '''
+    r'''
     Pattern class is a default Pattern class
 
     Attributes:
-        REGEX: str = r''
+        REGEX: str = ''
     '''
 
     REGEX = r''
@@ -69,7 +69,7 @@ class Pattern(BasePattern):
 
 
 class ColonPattern(Pattern):
-    '''
+    r'''
     ColonPattern class for parsing colon based urls
 
     Example:
@@ -77,14 +77,14 @@ class ColonPattern(Pattern):
         articles/:article/ == articles/<slug:article>/
 
     Attributes:
-        REGEX: str = r':(\w+)'
+        REGEX: str = ':(\w+)'
     '''
 
     REGEX = r':(\w+)'
 
 
 class CurlyPattern(Pattern):
-    '''
+    r'''
     CurlyPattern class for parsing curly brackets based urls
 
     Example:
@@ -92,14 +92,14 @@ class CurlyPattern(Pattern):
         articles/{article}/ == articles/<slug:article>/
 
     Attributes:
-        REGEX: str = r'\{(\w+)\}'
+        REGEX: str = '\{(\w+)\}'
     '''
 
     REGEX = r'\{(\w+)\}'
 
 
 class AnglePattern(Pattern):
-    '''
+    r'''
     AnglePattern class for parsing angle brackets based urls
 
     Example:
@@ -107,7 +107,7 @@ class AnglePattern(Pattern):
         articles/<article>/ == articles/<slug:article>/
 
     Attributes:
-        REGEX: str = r'<(\w+)>'
+        REGEX: str = '<(\w+)>'
     '''
 
     REGEX = r'<(\w+)>'
