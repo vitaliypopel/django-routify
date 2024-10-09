@@ -3,12 +3,18 @@ import uuid
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import View
 
-from django_routify import Router
+from django_routify import (
+    Router,
+
+    ColonPattern,
+    CurlyPattern,
+    AnglePattern,
+)
 
 default_based_router = Router('<slug:TYPE>/')
-colon_based_router = Router(':TYPE/', ...)
-curly_based_router = Router('{TYPE}/', ...)
-angle_based_router = Router('<TYPE>/', ...)
+colon_based_router = Router(':TYPE/', dynamic_pattern=ColonPattern)
+curly_based_router = Router('{TYPE}/', dynamic_pattern=CurlyPattern)
+angle_based_router = Router('<TYPE>/', dynamic_pattern=AnglePattern)
 
 
 @default_based_router.route('books/<slug:book>/')
