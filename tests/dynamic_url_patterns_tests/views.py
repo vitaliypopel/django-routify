@@ -1,25 +1,25 @@
 import uuid
-from audioop import reverse
-from functools import reduce
-from sys import prefix
 
 from django.http import HttpRequest, HttpResponse
-from django.views.generic import View, RedirectView
+from django.views.generic import View
 
 from django_routify import Router
 
-default_based_router = Router('<slug:type>/')
-colon_based_router = Router(':type/', ...)
-curly_based_router = Router('{type}/', ...)
-angle_based_router = Router('<type>/', ...)
+default_based_router = Router('<slug:TYPE>/')
+colon_based_router = Router(':TYPE/', ...)
+curly_based_router = Router('{TYPE}/', ...)
+angle_based_router = Router('<TYPE>/', ...)
 
 
 @default_based_router.route('books/<slug:book>/')
 @colon_based_router.route('books/:book/')
 @curly_based_router.route('books/{book}/')
 @angle_based_router.route('books/<book>/')
-def get_book(request: HttpRequest, book: str) -> HttpResponse:
-    return HttpResponse(f'Book "{book}"')
+def get_book(request: HttpRequest, TYPE: str, book: str) -> HttpResponse:
+    return HttpResponse(
+        f'TYPE: {TYPE}\n'
+        f'Book "{book}"'
+    )
 
 
 @default_based_router.route('articles/<int:user_id>/<uuid:article_uuid>/')
@@ -30,14 +30,12 @@ class ArticleView(View):
     async def get(
         self,
         request: HttpRequest,
+        TYPE: str,
         user_id: int,
         article_uuid: uuid.UUID,
     ) -> HttpResponse:
         return HttpResponse(
+            f'TYPE: {TYPE}'
             f'User ID: {user_id}\n'
             f'Article UUID: {article_uuid}'
         )
-
-
-class RedirectToSomethingView(RedirectView):
-    pass

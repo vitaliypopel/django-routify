@@ -11,7 +11,7 @@ from .views import (
 
 # Default Django's url registration
 default_urlpatterns = [
-    path('<slug:type>/', # prefix for each url
+    path('<slug:TYPE>/', # prefix for each url
         include(
             path('books/<slug:book>/', get_book, name='get_book'),
             path('articles/<int:user_id>/<uuid:article_uuid>/', ArticleView.as_view(), name='article'),
