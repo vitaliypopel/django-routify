@@ -6,14 +6,14 @@ def _validate_type(
     obj: object,
     expected_type: type | tuple[Any, ...],
 ) -> None:
-    '''
+    """
     Function validator for router class.
     Do not use it without need in your code!
     :param obj_name: str
     :param obj: object
     :param expected_type: type | tuple[Any, ...]
     :return: None
-    '''
+    """
 
     if not isinstance(obj, expected_type):
         raise TypeError(

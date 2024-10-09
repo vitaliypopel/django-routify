@@ -23,7 +23,7 @@ FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
 
 
 class Router(BaseRouter):
-    '''
+    """
     Router class for routing your views.
 
     Attributes:
@@ -33,7 +33,7 @@ class Router(BaseRouter):
         __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
         __auto_naming: bool = True          := Auto naming for every view
         __auto_trailing_slash: bool = False := Auto trailing slash for every view path
-    '''
+    """
 
     def __init__(
         self,
