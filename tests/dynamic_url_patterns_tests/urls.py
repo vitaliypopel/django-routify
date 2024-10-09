@@ -3,6 +3,8 @@ from django.urls import path, include
 from .views import (
     get_book,
     ArticleView,
+    RedirectToBookView,
+
     default_based_router,
     colon_based_router,
     curly_based_router,
@@ -13,8 +15,13 @@ from .views import (
 default_urlpatterns = [
     path('<slug:TYPE>/', # prefix for each url
         include(
-            path('books/<slug:book>/', get_book, name='get_book'),
-            path('articles/<int:user_id>/<uuid:article_uuid>/', ArticleView.as_view(), name='article'),
+            [
+                path('books/<slug:book>/', get_book, name='book'),
+                path('articles/<int:user_id>/<uuid:article_uuid>/',
+                     ArticleView.as_view(), name='article'),
+                path('redirect/',
+                     RedirectToBookView.as_view(), name='redirect_to_book'),
+            ],
         ),
     ),
 ]
