@@ -51,6 +51,14 @@ class BasePattern(ABC):
         """
         pass
 
+    @abstractmethod
+    def is_custom(self, url_: str) -> bool:
+        """
+        Is url has params from current pattern
+        :param url_: str
+        :return: bool
+        """
+
     @staticmethod
     @abstractmethod
     def _get_annotations(
@@ -74,15 +82,6 @@ class BasePattern(ABC):
         :return: str
         """
         pass
-
-    @staticmethod
-    @abstractmethod
-    def is_custom(url_: str) -> bool:
-        """
-        Is url has params from current pattern
-        :param url_: str
-        :return: bool
-        """
 
     @abstractmethod
     def __str__(self) -> str:
