@@ -1,15 +1,11 @@
-name: Django-Routify v0.3.0-alpha
+name: Django-Routify Tests
 
 on:
   release:
     types: [published]
 
-permissions:
-  contents: read
-
 jobs:
-  deploy:
-
+  test:
     strategy:
       matrix:
         python: ['3.8', '3.9', '3.10', '3.11', '3.12']
@@ -29,20 +25,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build twine
         pip install -r requirements.txt
+        pip install django-routify
 
-    - name: Build package
-      run: python -m build
+    - name: Verify Python
+      run: python --version
 
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@1.10.3
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist-files
-        path: dist/*
+    - name: Run unit tests
+      run: python -m tests
