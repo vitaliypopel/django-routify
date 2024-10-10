@@ -1,3 +1,4 @@
+import http.client
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -100,7 +101,13 @@ class BasePattern(ABC):
         pass
 
 
-from .patterns import Pattern
+from .validator import _validate_type
+from .patterns import (
+    Pattern,
+    ColonPattern,
+    CurlyPattern,
+    AnglePattern,
+)
 
 
 class BaseRouter(ABC):
@@ -135,7 +142,6 @@ class BaseRouter(ABC):
     __dynamic_pattern: Pattern
     'Dynamic pattern for parsing and normalizing custom urls | By default equals None'
 
-    @abstractmethod
     def __init__(
         self,
         prefix: str = None,
@@ -148,67 +154,90 @@ class BaseRouter(ABC):
         :param app_name: str | None
         :param kwargs: Any
         """
-        pass
+
+        auto_naming = kwargs.get('auto_naming', True)
+        auto_trailing_slash = kwargs.get('auto_trailing_slash', False)
+        DynamicPattern = kwargs.get('dynamic_pattern', Pattern)()
+
+        _validate_type('prefix', prefix, (str, type(None)))
+        _validate_type('app_name', app_name, (str, type(None)))
+        _validate_type('auto_naming', auto_naming, bool)
+        _validate_type('auto_trailing_slash', auto_trailing_slash, bool)
+        _validate_type(
+            'dynamic_pattern',
+            DynamicPattern,
+            (Pattern, ColonPattern, CurlyPattern, AnglePattern),
+        )
+
+        self.__prefix = prefix or ''
+        self.__prefix = self.__prefix.lstrip('/')
+
+        if auto_trailing_slash:
+            self.__prefix = self.__prefix.rstrip('/') + '/'
+
+        if self.__prefix == '/':
+            self.__prefix = ''
+
+        self.__app_name = app_name or ''
+        self.__auto_naming = auto_naming
+        self.__auto_trailing_slash = auto_trailing_slash
+        self.__dynamic_pattern = DynamicPattern
+
+        self.__urls = []
 
     @property
-    @abstractmethod
     def prefix(self) -> str:
         """
         prefix getter\n
         Prefix for each url paths
         :return: str
         """
-        pass
+        return self.__prefix
 
     @property
-    @abstractmethod
     def app_name(self) -> str:
         """
         app_name getter\n
         Application name same as app_name in urls.py
         :return: str
         """
-        pass
+        return self.__app_name
 
     @property
-    @abstractmethod
     def urls(self) -> list[URLPattern]:
         """
         urls getter\n
         List of URLPatterns that can be included in urlpatterns
         :return: list[django.urls.URLPattern]
         """
-        pass
+        return self.__urls
 
     @property
-    @abstractmethod
     def auto_naming(self) -> bool:
         """
         auto_naming getter\n
         Auto naming for every view
         :return: bool
         """
-        pass
+        return self.__auto_naming
 
     @property
-    @abstractmethod
     def auto_trailing_slash(self) -> bool:
         """
         auto_trailing_slash getter\n
         Auto trailing slash for every view path
         :return: bool
         """
-        pass
+        return self.__auto_trailing_slash
 
     @property
-    @abstractmethod
     def dynamic_pattern(self) -> Pattern:
         """
         dynamic_pattern getter\n
         Dynamic pattern for parsing and normalizing custom urls
         :return: django_routify.patterns.Pattern
         """
-        pass
+        return self.__dynamic_pattern
 
     @abstractmethod
     def route(self, url_path: str, **kwargs):
