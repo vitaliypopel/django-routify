@@ -1,17 +1,17 @@
-from typing import Any
+from typing import Any, Tuple
 
 
 def _validate_type(
     obj_name: str,
     obj: object,
-    expected_type: type | tuple[Any, ...],
+    expected_type: type | Tuple[Any, ...],
 ) -> None:
     """
     Function validator for router class.
     Do not use it without need in your code!
     :param obj_name: str
     :param obj: object
-    :param expected_type: type | tuple[Any, ...]
+    :param expected_type: type | Tuple[Any, ...]
     :return: None
     """
 

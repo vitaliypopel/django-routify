@@ -1,7 +1,7 @@
 import re
 import uuid
 
-from typing import Any
+from typing import Any, Dict, List
 from ._abstraction import BasePattern
 
 
@@ -45,10 +45,10 @@ class Pattern(BasePattern):
 
         return django_url
 
-    def _get_url_params(self, custom_url: str) -> list[str]:
+    def _get_url_params(self, custom_url: str) -> List[str]:
         return re.findall(self.REGEX, custom_url)
 
-    def _get_dynamic_params(self, custom_url: str) -> list[str]:
+    def _get_dynamic_params(self, custom_url: str) -> List[str]:
         return re.findall(
             self.REGEX.replace('(', '').replace(')', ''),
             custom_url,
@@ -72,7 +72,7 @@ class Pattern(BasePattern):
     def _get_annotations(
         view: Any,
         class_based: bool,
-    ) -> dict[str, type]:
+    ) -> Dict[str, type]:
         annotations = {}
 
         if class_based:

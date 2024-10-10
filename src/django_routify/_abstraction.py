@@ -1,6 +1,5 @@
-import http.client
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Dict, List
 
 from django.urls import URLPattern
 
@@ -35,20 +34,20 @@ class BasePattern(ABC):
         pass
 
     @abstractmethod
-    def _get_url_params(self, custom_url: str) -> list[str]:
+    def _get_url_params(self, custom_url: str) -> List[str]:
         """
         Method for getting url params from custom url
         :param custom_url: str
-        :return: list[str]
+        :return: List[str]
         """
         pass
 
     @abstractmethod
-    def _get_dynamic_params(self, custom_url: str) -> list[str]:
+    def _get_dynamic_params(self, custom_url: str) -> List[str]:
         """
         Method for getting full dynamic params from custom url
         :param custom_url: str
-        :return: list[str]
+        :return: List[str]
         """
         pass
 
@@ -65,12 +64,12 @@ class BasePattern(ABC):
     def _get_annotations(
         view: Any,
         class_based: bool,
-    ) -> dict[str, type]:
+    ) -> Dict[str, type]:
         """
         Method for getting annotations from difference types of views
         :param view: Any
         :param class_based: bool
-        :return: dict[str, str]
+        :return: Dict[str, str]
         """
         pass
 
@@ -119,7 +118,7 @@ class BaseRouter(ABC):
         ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
         __app_name: str | None              := Application name same as app_name in urls.py
         __prefix: str                       := Prefix for each url paths
-        __urls: list[URLPattern]            := List of URLPatterns that can be included in urlpatterns
+        __urls: List[URLPattern]            := List of URLPatterns that can be included in urlpatterns
         __auto_naming: bool = True          := Auto naming for every view
         __auto_trailing_slash: bool = False := Auto trailing slash for every view path
         __dynamic_pattern: Pattern          := Dynamic pattern for parsing and normalizing custom urls
@@ -132,7 +131,7 @@ class BaseRouter(ABC):
     'Application name same as app_name in urls.py'
     __prefix: str
     'Prefix for each url paths | By default equals ""'
-    __urls: list[URLPattern]
+    __urls: List[URLPattern]
     'List of URLPatterns that can be included in urlpatterns'
 
     __auto_naming: bool
@@ -204,11 +203,11 @@ class BaseRouter(ABC):
         return self.__app_name
 
     @property
-    def urls(self) -> list[URLPattern]:
+    def urls(self) -> List[URLPattern]:
         """
         urls getter\n
         List of URLPatterns that can be included in urlpatterns
-        :return: list[django.urls.URLPattern]
+        :return: List[django.urls.URLPattern]
         """
         return self.__urls
 
