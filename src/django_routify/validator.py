@@ -1,4 +1,4 @@
-from typing import Any, Tuple, Type, Union
+from typing import Tuple, Type, Union
 
 
 def _validate_type(
