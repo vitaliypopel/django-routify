@@ -156,7 +156,7 @@ class BaseRouter(ABC):
 
         auto_naming = kwargs.get('auto_naming', True)
         auto_trailing_slash = kwargs.get('auto_trailing_slash', False)
-        DynamicPattern = kwargs.get('dynamic_pattern', Pattern)()
+        dynamic_pattern = kwargs.get('dynamic_pattern', Pattern)()
 
         _validate_type('prefix', prefix, (str, type(None)))
         _validate_type('app_name', app_name, (str, type(None)))
@@ -164,7 +164,7 @@ class BaseRouter(ABC):
         _validate_type('auto_trailing_slash', auto_trailing_slash, bool)
         _validate_type(
             'dynamic_pattern',
-            DynamicPattern,
+            dynamic_pattern,
             (Pattern, ColonPattern, CurlyPattern, AnglePattern),
         )
 
@@ -180,7 +180,7 @@ class BaseRouter(ABC):
         self.__app_name = app_name or ''
         self.__auto_naming = auto_naming
         self.__auto_trailing_slash = auto_trailing_slash
-        self.__dynamic_pattern = DynamicPattern
+        self.__dynamic_pattern = dynamic_pattern
 
         self.__urls = []
 
