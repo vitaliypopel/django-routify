@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Type, Union
 
 from django.urls import URLPattern
 
@@ -27,7 +27,7 @@ class BasePattern(ABC):
         Method for normalizing url using REGEX.
         Returns url with Django format style.
         :param custom_url: str
-        :param view: FUNC_BASED_VIEW | View
+        :param view: Union[FUNC_BASED_VIEW, View]
         :param class_based: bool
         :return: str
         """
@@ -64,21 +64,21 @@ class BasePattern(ABC):
     def _get_annotations(
         view: Any,
         class_based: bool,
-    ) -> Dict[str, type]:
+    ) -> Dict[str, Type]:
         """
         Method for getting annotations from difference types of views
         :param view: Any
         :param class_based: bool
-        :return: Dict[str, str]
+        :return: Dict[str, Type]
         """
         pass
 
     @staticmethod
     @abstractmethod
-    def _get_django_type(python_type: type) -> str:
+    def _get_django_type(python_type: Type) -> str:
         """
         Method for getting Django type for dynamic URL from Python type
-        :param python_type: type
+        :param python_type: Type
         :return: str
         """
         pass
@@ -116,7 +116,7 @@ class BaseRouter(ABC):
 
     Attributes:
         ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
-        __app_name: str | None              := Application name same as app_name in urls.py
+        __app_name: Union[str, None]        := Application name same as app_name in urls.py
         __prefix: str                       := Prefix for each url paths
         __urls: List[URLPattern]            := List of URLPatterns that can be included in urlpatterns
         __auto_naming: bool = True          := Auto naming for every view
@@ -127,7 +127,7 @@ class BaseRouter(ABC):
     ALLOWED_METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
     'ALLOWED_METHODS is a valid HTTP methods'
 
-    __app_name: str | None
+    __app_name: Union[str, None]
     'Application name same as app_name in urls.py'
     __prefix: str
     'Prefix for each url paths | By default equals ""'
@@ -149,8 +149,8 @@ class BaseRouter(ABC):
     ) -> None:
         """
         Initial method for Router.
-        :param prefix: str | None
-        :param app_name: str | None
+        :param prefix: Union[str, None]
+        :param app_name: Union[str, None]
         :param kwargs: Any
         """
 

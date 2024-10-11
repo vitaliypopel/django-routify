@@ -1,7 +1,7 @@
 import re
 import uuid
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Type
 from ._abstraction import BasePattern
 
 
@@ -72,7 +72,7 @@ class Pattern(BasePattern):
     def _get_annotations(
         view: Any,
         class_based: bool,
-    ) -> Dict[str, type]:
+    ) -> Dict[str, Type]:
         annotations = {}
 
         if class_based:
@@ -101,7 +101,7 @@ class Pattern(BasePattern):
         return annotations
 
     @staticmethod
-    def _get_django_type(python_type: type) -> str:
+    def _get_django_type(python_type: Type) -> str:
         if python_type is int:
             return 'int'
         elif python_type is uuid.UUID:

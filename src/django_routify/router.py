@@ -6,13 +6,13 @@ from django.urls import path
 from django.views import View
 
 from inspect import isclass
-from typing import Callable, List
+from typing import Callable, List, Type, Union
 import re
 
 from ._abstraction import BaseRouter
 from .validator import _validate_type
 
-FUNC_BASED_VIEW: type = Callable[[HttpRequest, ...], HttpResponse]
+FUNC_BASED_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
 'FUNC_BASED_VIEW is a type of Django function based views'
 
 
@@ -22,7 +22,7 @@ class Router(BaseRouter):
 
     Attributes:
         ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
-        __app_name: str | None              := Application name same as app_name in urls.py
+        __app_name: Union[str, None]        := Application name same as app_name in urls.py
         __prefix: str                       := Prefix for each url paths
         __urls: List[URLPattern]            := List of URLPatterns that can be included in urlpatterns
         __auto_naming: bool = True          := Auto naming for every view
@@ -31,15 +31,15 @@ class Router(BaseRouter):
     """
 
     def route(self, url_path: str, **kwargs):
-        def register(view: FUNC_BASED_VIEW | View) -> FUNC_BASED_VIEW | View:
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
             nonlocal url_path, kwargs
 
             class_based = False
             if isclass(view) and issubclass(view, View):
                 class_based = True
 
-            name: str | None = kwargs.get('name', None)
-            methods: List[str] | None = kwargs.get('methods', None)
+            name: Union[str, None] = kwargs.get('name', None)
+            methods: Union[List[str], None] = kwargs.get('methods', None)
 
             _validate_type('url_path', url_path, str)
             _validate_type('name', name, (str, type(None)))
@@ -107,7 +107,6 @@ class Router(BaseRouter):
 
             as_view = view
             if class_based:
-                view: View
                 as_view = view.as_view()
 
             self._BaseRouter__urls.append(
