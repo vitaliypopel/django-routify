@@ -12,6 +12,9 @@ If `auto_trailing_slash` is `True` then url_path which will be equal to `'/hello
 
 Django-Routify is support `function` and `class` based views, and also `asynchronous`.
 
+## Documentation
+Documentation are already available [here](https://vitaliypopel.github.io/django-routify-docs/homepage)!
+
 ## Requirements
 - Python 3.8+
 - Django 4.0+
@@ -41,7 +44,6 @@ from django.http import HttpRequest, HttpResponse
 from django_routify import Router
 
 router = Router('/app', 'app', auto_trailing_slash=True)
-# or   = Router(prefix='/app', app_name='app', auto_trailing_slash=True)
 
 
 @router.route('/hello-world', methods=['GET'])
@@ -83,9 +85,11 @@ app_name = 'app'
 urlpatterns = [
     path(
         'app/',
-        include([
+        include(
+            [
                 path('hello-world/', hello_world, name='hello_world'),
-        ])
+            ]
+        ),
     ),
 ]
 ```
