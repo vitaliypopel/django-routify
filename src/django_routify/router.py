@@ -6,7 +6,7 @@ from django.urls import path
 from django.views import View
 
 from inspect import isclass
-from typing import Callable, List, Type, Union
+from typing import Callable, List, Optional, Type, Union
 import re
 
 from ._abstraction import BaseRouter
@@ -22,7 +22,7 @@ class Router(BaseRouter):
 
     Attributes:
         ALLOWED_METHODS: str                := ALLOWED_METHODS is a valid HTTP methods
-        __app_name: Union[str, None]        := Application name same as app_name in urls.py
+        __app_name: Optional[str]           := Application name same as app_name in urls.py
         __prefix: str                       := Prefix for each url paths
         __urls: List[URLPattern]            := List of URLPatterns that can be included in urlpatterns
         __auto_naming: bool = True          := Auto naming for every view
@@ -38,8 +38,8 @@ class Router(BaseRouter):
             if isclass(view) and issubclass(view, View):
                 class_based = True
 
-            name: Union[str, None] = kwargs.get('name', None)
-            methods: Union[List[str], None] = kwargs.get('methods', None)
+            name: Optional[str] = kwargs.get('name', None)
+            methods: Optional[List[str]] = kwargs.get('methods', None)
 
             _validate_type('url_path', url_path, str)
             _validate_type('name', name, (str, type(None)))
