@@ -4,14 +4,14 @@ from typing import Any, Tuple, Type, Union
 def _validate_type(
     obj_name: str,
     obj: object,
-    expected_type: Union[Type,  Tuple[Any, ...]],
+    expected_type: Union[Type,  Tuple[Any]],
 ) -> None:
     """
     Function validator for router class.
     Do not use it without need in your code!
     :param obj_name: str
     :param obj: object
-    :param expected_type: Union[Type,  Tuple[Any, ...]]
+    :param expected_type: Union[Type,  Tuple[Any]]
     :return: None
     """
 

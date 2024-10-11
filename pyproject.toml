@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-routify"
-version = "0.3"
+version = "0.3.0.1"
 description = "Django-Routify is a package for simple routing Views in the classic Django framework."
 
 readme = "README.md"
@@ -88,5 +88,6 @@ dependencies = [
 
 [project.urls]
 "Homepage" = "https://github.com/vitaliypopel/django-routify"
+"Documentation" = "https://vitaliypopel.github.io/django-routify-docs/homepage"
 "Bug reports" = "https://github.com/vitaliypopel/django-routify/issues"
 "Source" = "https://github.com/vitaliypopel/django-routify/"
