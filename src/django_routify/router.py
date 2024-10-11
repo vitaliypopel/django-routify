@@ -12,7 +12,7 @@ import re
 from ._abstraction import BaseRouter
 from .validator import _validate_type
 
-FUNC_BASED_VIEW: Type = Callable[[HttpRequest, ...], HttpResponse]
+FUNC_BASED_VIEW: Type = Callable[[HttpRequest], HttpResponse]
 'FUNC_BASED_VIEW is a type of Django function based views'
 
 
