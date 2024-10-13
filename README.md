@@ -1,16 +1,11 @@
 # Django-Routify
-**Django-Routify** is a package for simple routing Views in the classic Django framework.
+**Django-Routify** is a lightweight package designed to simplify routing views in the classic Django framework.
 
-With Django-Routify package you no longer have to manually register your views in `urlpatterns` using django.urls.path function.
+With Django-Routify, you no longer need to manually register your views in `urlpatterns` using Django's `path()` function. Instead, the package introduces the `Router` class, allowing you to easily register views using the `@Router.route(url_path=...)` decorator. This approach is similar to what you might already be familiar with from frameworks like Flask, FastAPI, or Django REST Framework (DRF), where views are registered with decorators. This not only makes your code easier to read but also streamlines the process of routing.
 
-Django-Routify can help you to easily register your views using Router class and his @Router.route(...) decorator.
-If you are familiar with Flask, FastAPI or even Django REST Framework, you know that every single view should be registered using decorators.
-It is <ins>easy to read</ins> first of all, and <ins>simplified work</ins>.
+Additionally, Django-Routify provides the option to set `auto_trailing_slash=True` when initializing the `Router`. This allows you to write URL paths similar to those in Flask or FastAPI, such as `/hello-world`, which will be automatically translated into the classic Django URL format: `hello-world/`.
 
-Also you can set `auto_trailing_slash` to `True` value when you're initializing your Router and can write your url_path similar to Flask, FastAPI etc.
-If `auto_trailing_slash` is `True` then url_path which will be equal to `'/hello-world'` will be translated to classic Django url rule - `'hello-world/'`.
-
-Django-Routify is support `function` and `class` based views, and also `asynchronous`.
+Django-Routify supports both `function-based` and `class-based` views, as well as `asynchronous` views, providing flexibility for different project needs. 
 
 ## Documentation
 Documentation are already available [here](https://vitaliypopel.github.io/django-routify-docs/homepage)!
