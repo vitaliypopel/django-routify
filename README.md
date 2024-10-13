@@ -10,23 +10,6 @@ Django-Routify supports both `function-based` and `class-based` views, as well a
 ## Documentation
 Documentation are already available [here](https://vitaliypopel.github.io/django-routify-docs/homepage)!
 
-## Requirements
-- Python 3.8+
-- Django 4.0+
-
-## Installation
-To install Django-Routify package use the command below in your environment:
-
-- Using `pip`
-```shell
-pip install django-routify
-```
-
-- Using `Poetry`
-```shell
-poetry add django-routify
-```
-
 ## Example
 For **extended example** with tests visit [examples/example](https://github.com/vitaliypopel/django-routify/tree/main/examples/example).
 
@@ -91,3 +74,20 @@ urlpatterns = [
 
 #### Note:
 _The result of these two examples will do the same thing_
+
+## Requirements
+- Python 3.8+
+- Django 4.0+
+
+## Installation
+To install Django-Routify package use the command below in your environment:
+
+- Using `pip`
+```shell
+pip install django-routify
+```
+
+- Using `Poetry`
+```shell
+poetry add django-routify
+```
