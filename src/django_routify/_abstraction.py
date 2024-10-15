@@ -249,6 +249,61 @@ class BaseRouter(ABC):
         pass
 
     @abstractmethod
+    def get(self, url_path: str, **kwargs):
+        """
+        Router method that wrap view into require GET decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Any
+        :return: Any
+        """
+        pass
+
+    @abstractmethod
+    def post(self, url_path: str, **kwargs):
+        """
+        Router method that wrap view into require POST decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Any
+        :return: Any
+        """
+        pass
+
+    @abstractmethod
+    def put(self, url_path: str, **kwargs):
+        """
+        Router method that wrap view into require PUT decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Any
+        :return: Any
+        """
+        pass
+
+    @abstractmethod
+    def patch(self, url_path: str, **kwargs):
+        """
+        Router method that wrap view into require PATCH decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Any
+        :return: Any
+        """
+        pass
+
+    @abstractmethod
+    def delete(self, url_path: str, **kwargs):
+        """
+        Router method that wrap view into require DELETE decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Any
+        :return: Any
+        """
+        pass
+
+    @abstractmethod
     def __str__(self) -> str:
         """
         Router string representation
