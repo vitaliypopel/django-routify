@@ -120,6 +120,51 @@ class Router(BaseRouter):
             return view
         return register
 
+    def get(self, url_path: str, **kwargs):
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
+            nonlocal url_path, kwargs
+
+            name = kwargs.get('name')
+
+            return self.route(url_path, name=name, methods=['GET'])(view)
+        return register
+
+    def post(self, url_path: str, **kwargs):
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
+            nonlocal url_path, kwargs
+
+            name = kwargs.get('name')
+
+            return self.route(url_path, name=name, methods=['POST'])(view)
+        return register
+
+    def put(self, url_path: str, **kwargs):
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
+            nonlocal url_path, kwargs
+
+            name = kwargs.get('name')
+
+            return self.route(url_path, name=name, methods=['PUT'])(view)
+        return register
+
+    def patch(self, url_path: str, **kwargs):
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
+            nonlocal url_path, kwargs
+
+            name = kwargs.get('name')
+
+            return self.route(url_path, name=name, methods=['PATCH'])(view)
+        return register
+
+    def delete(self, url_path: str, **kwargs):
+        def register(view: Union[FUNC_BASED_VIEW, View]) -> Union[FUNC_BASED_VIEW, View]:
+            nonlocal url_path, kwargs
+
+            name = kwargs.get('name')
+
+            return self.route(url_path, name=name, methods=['DELETE'])(view)
+        return register
+
     def __str__(self) -> str:
         return f'Router(\n' \
                f'\tapp_name:\t"{self.app_name}"\n' \
