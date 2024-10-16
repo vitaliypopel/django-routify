@@ -15,7 +15,7 @@ from .views import (
 )
 
 
-default_urlpatterns = [
+default_django_urlpatterns = [
     path(
         'method/', # URL prefix
         include(
