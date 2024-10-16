@@ -268,6 +268,7 @@ class BaseRouter(ABC):
         """
         pass
 
+    @abstractmethod
     def __register_with_single_method(
         self,
         view: Union[FUNC_BASED_VIEW, View],
