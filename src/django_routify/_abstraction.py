@@ -288,67 +288,67 @@ class BaseRouter(ABC):
         pass
 
     @abstractmethod
-    def route(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def route(self, url_path: str, **kwargs):
         """
         Router decorator that register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
     @abstractmethod
-    def get(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def get(self, url_path: str, **kwargs):
         """
         Router decorator that wrap view into require GET decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
     @abstractmethod
-    def post(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def post(self, url_path: str, **kwargs):
         """
         Router decorator that wrap view into require POST decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
     @abstractmethod
-    def put(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def put(self, url_path: str, **kwargs):
         """
         Router decorator that wrap view into require PUT decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
     @abstractmethod
-    def patch(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def patch(self, url_path: str, **kwargs):
         """
         Router decorator that wrap view into require PATCH decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
     @abstractmethod
-    def delete(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+    def delete(self, url_path: str, **kwargs):
         """
         Router decorator that wrap view into require DELETE decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
         :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
+        :return: Any
         """
         pass
 
