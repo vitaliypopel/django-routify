@@ -5,8 +5,7 @@ from django.views.generic import View
 from django_routify import Router, ColonPattern
 
 router = Router(
-    prefix='/method',
-    app_name='app_with_cool_feature',
+    '/method',
     auto_trailing_slash=True,
     dynamic_pattern=ColonPattern,
 )
@@ -14,9 +13,7 @@ router = Router(
 
 @router.route('/redirect/:method', name='redirect', methods=['GET']) # same as @router.get
 async def redirect_view(request: HttpRequest, method: str) -> HttpResponse:
-    return redirect(reverse(
-        f'app_with_cool_feature:{method}',
-    ))
+    return redirect(f'method/{method}')
 
 
 @router.get('/get')
