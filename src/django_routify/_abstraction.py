@@ -272,7 +272,6 @@ class BaseRouter(ABC):
         self,
         view: Union[FUNC_BASED_VIEW, View],
         url_path: str,
-        method: Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         **kwargs,
     ) -> Union[FUNC_BASED_VIEW, View]:
         """
@@ -281,7 +280,6 @@ class BaseRouter(ABC):
         and returns view
         :param view: Union[FUNC_BASED_VIEW, View]
         :param url_path: str
-        :param method: Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
         :param kwargs: Dict[str, Any]
         :return: Union[FUNC_BASED_VIEW, View]
         """
