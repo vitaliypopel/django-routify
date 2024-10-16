@@ -32,6 +32,14 @@ class Router(BaseRouter):
         url_path: str,
         **kwargs,
     ) -> Union[FUNC_BASED_VIEW, View]:
+        """
+        Private method which register view in Router and returns view
+        :param view: Union[FUNC_BASED_VIEW, View]
+        :param url_path: str
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
+        """
+
         class_based = False
         if isclass(view) and issubclass(view, View):
             class_based = True
@@ -123,6 +131,16 @@ class Router(BaseRouter):
         url_path: str,
         **kwargs,
     ) -> Union[FUNC_BASED_VIEW, View]:
+        """
+        Private method which register view in Router,
+        wrap it in require HTTP methods with one method
+        and returns view
+        :param view: Union[FUNC_BASED_VIEW, View]
+        :param url_path: str
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
+        """
+
         method = kwargs.get('method')
         name = kwargs.get('name')
 

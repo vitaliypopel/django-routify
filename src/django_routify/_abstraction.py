@@ -253,40 +253,6 @@ class BaseRouter(ABC):
         return self.__dynamic_pattern
 
     @abstractmethod
-    def __register(
-        self,
-        view: Union[FUNC_BASED_VIEW, View],
-        url_path: str,
-        **kwargs,
-    ) -> Union[FUNC_BASED_VIEW, View]:
-        """
-        Private method which register view in Router and returns view
-        :param view: Union[FUNC_BASED_VIEW, View]
-        :param url_path: str
-        :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
-        """
-        pass
-
-    @abstractmethod
-    def __register_with_single_method(
-        self,
-        view: Union[FUNC_BASED_VIEW, View],
-        url_path: str,
-        **kwargs,
-    ) -> Union[FUNC_BASED_VIEW, View]:
-        """
-        Private method which register view in Router,
-        wrap it in require HTTP methods with one method
-        and returns view
-        :param view: Union[FUNC_BASED_VIEW, View]
-        :param url_path: str
-        :param kwargs: Dict[str, Any]
-        :return: Union[FUNC_BASED_VIEW, View]
-        """
-        pass
-
-    @abstractmethod
     def route(self, url_path: str, **kwargs):
         """
         Router decorator that register view in urlpatterns with django.urls.path
