@@ -1,7 +1,18 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Type
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Literal,
+    Optional,
+    Type,
+    Union,
+)
 
+from django.http import HttpRequest, HttpResponse
 from django.urls import URLPattern
+from django.views import View
 
 
 class BasePattern(ABC):
@@ -107,6 +118,9 @@ from .patterns import (
     CurlyPattern,
     AnglePattern,
 )
+
+FUNC_BASED_VIEW: Type = Callable[[HttpRequest], HttpResponse]
+'FUNC_BASED_VIEW is a type of Django function based views'
 
 
 class BaseRouter(ABC):
@@ -239,67 +253,102 @@ class BaseRouter(ABC):
         return self.__dynamic_pattern
 
     @abstractmethod
-    def route(self, url_path: str, **kwargs):
+    def __register(
+        self,
+        view: Union[FUNC_BASED_VIEW, View],
+        url_path: str,
+        **kwargs,
+    ) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that register view in urlpatterns with django.urls.path
+        Private method which register view in Router and returns view
+        :param view: Union[FUNC_BASED_VIEW, View]
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
+        """
+        pass
+
+    def __register_with_single_method(
+        self,
+        view: Union[FUNC_BASED_VIEW, View],
+        url_path: str,
+        method: Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        **kwargs,
+    ) -> Union[FUNC_BASED_VIEW, View]:
+        """
+        Private method which register view in Router,
+        wrap it in require HTTP methods with one method
+        and returns view
+        :param view: Union[FUNC_BASED_VIEW, View]
+        :param url_path: str
+        :param method: Literal['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 
     @abstractmethod
-    def get(self, url_path: str, **kwargs):
+    def route(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that wrap view into require GET decorator and
-        register view in urlpatterns with django.urls.path
+        Router decorator that register view in urlpatterns with django.urls.path
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 
     @abstractmethod
-    def post(self, url_path: str, **kwargs):
+    def get(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that wrap view into require POST decorator and
+        Router decorator that wrap view into require GET decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 
     @abstractmethod
-    def put(self, url_path: str, **kwargs):
+    def post(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that wrap view into require PUT decorator and
+        Router decorator that wrap view into require POST decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 
     @abstractmethod
-    def patch(self, url_path: str, **kwargs):
+    def put(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that wrap view into require PATCH decorator and
+        Router decorator that wrap view into require PUT decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 
     @abstractmethod
-    def delete(self, url_path: str, **kwargs):
+    def patch(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
         """
-        Router method that wrap view into require DELETE decorator and
+        Router decorator that wrap view into require PATCH decorator and
         register view in urlpatterns with django.urls.path
         :param url_path: str
-        :param kwargs: Any
-        :return: Any
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
+        """
+        pass
+
+    @abstractmethod
+    def delete(self, url_path: str, **kwargs) -> Union[FUNC_BASED_VIEW, View]:
+        """
+        Router decorator that wrap view into require DELETE decorator and
+        register view in urlpatterns with django.urls.path
+        :param url_path: str
+        :param kwargs: Dict[str, Any]
+        :return: Union[FUNC_BASED_VIEW, View]
         """
         pass
 

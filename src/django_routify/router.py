@@ -1,4 +1,3 @@
-from django.http import HttpRequest, HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 
@@ -6,14 +5,11 @@ from django.urls import path
 from django.views import View
 
 from inspect import isclass
-from typing import Callable, List, Optional, Type, Union
+from typing import List, Optional, Union
 import re
 
-from ._abstraction import BaseRouter
+from ._abstraction import BaseRouter, FUNC_BASED_VIEW
 from .validator import _validate_type
-
-FUNC_BASED_VIEW: Type = Callable[[HttpRequest], HttpResponse]
-'FUNC_BASED_VIEW is a type of Django function based views'
 
 
 class Router(BaseRouter):
