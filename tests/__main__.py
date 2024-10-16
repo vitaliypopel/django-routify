@@ -1,5 +1,7 @@
 import unittest
 
+from . import utils
+
 from .trailing_slash_tests.urls import (
     default_with_trailing_urlpatterns,
     routify_with_trailing_urlpatterns,
@@ -13,6 +15,11 @@ from .dynamic_url_patterns_tests.urls import (
     colon_based_urlpatterns,
     curly_based_urlpatterns,
     angle_based_urlpatterns,
+)
+
+from .single_method_decorators_tests.urls import (
+    default_django_urlpatterns,
+    routify_urlpatterns,
 )
 
 
@@ -90,6 +97,33 @@ class DynamicUrlPatternsTests(unittest.TestCase):
                     ]
                 ))
 
+
+class SingleMethodDecoratorsTests(unittest.TestCase):
+    def test_decorated_views(self):
+        for default_urls_obj, routify_urls_obj in zip(
+                default_django_urlpatterns,
+                routify_urlpatterns,
+        ):
+            for default_url, routify_url in zip(
+                    default_urls_obj.url_patterns,
+                    routify_urls_obj.url_patterns,
+            ):
+                self.assertEqual(
+                    str(default_url.pattern),
+                    str(routify_url.pattern),
+                )
+                self.assertEqual(
+                    default_url.pattern.name,
+                    routify_url.pattern.name,
+                )
+
+                default_allowed_methods = utils.get_allowed_methods(default_url.callback) # get list of allowed methods
+                routify_allowed_methods = utils.get_allowed_methods(routify_url.callback) # get list of allowed methods
+
+                self.assertEqual(
+                    default_allowed_methods,
+                    routify_allowed_methods,
+                )
 
 if __name__ == '__main__':
     # Run test
