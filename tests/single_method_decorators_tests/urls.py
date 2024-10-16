@@ -20,7 +20,7 @@ default_django_urlpatterns = [
         'method/', # URL prefix
         include(
             [
-                path('redirect/', redirect_view, name='redirect'), # redirect view
+                path('redirect/<slug:method>/', redirect_view, name='redirect'), # redirect view
                 path('get/', GetMethodView.as_view(), name='get_method'), # get method view
                 path('post/', PostMethodView.as_view(), name='post_method'), # post method view
                 path('put/', PutMethodView.as_view(), name='put_method'), # put method view
