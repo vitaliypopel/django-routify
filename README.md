@@ -24,6 +24,7 @@ from django_routify import Router
 router = Router('/app', 'app', auto_trailing_slash=True)
 
 
+# or @router.get('/hello-world')
 @router.route('/hello-world', methods=['GET'])
 def hello_world(request: HttpRequest) -> HttpResponse:
     return HttpResponse('Hello World!')
